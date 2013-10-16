@@ -29,6 +29,20 @@ module.exports = {
       }
     });
   },
+  showByName: function(req, res) {
+    Trip.findByName(req.param('name')).done(function(err, trip) {
+
+    });
+  },
+  showAll: function(req, res) {
+    Trip.find().done(function(err, trips) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.log("Trips found:", trips);
+      }
+    });
+  },
   create: function(req, res) {
     Trip.create({
       name: req.param('name')
