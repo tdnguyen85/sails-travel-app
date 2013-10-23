@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css" />
 
-    <script src="//cdn.jsdelivr.net/foundation/4.3.2/js/foundation.min.js"></script>
     <script src="http://fb.me/react-0.5.0.min.js"></script>
     <script src="http://fb.me/JSXTransformer-0.5.0.js"></script>
   </head>
@@ -11,37 +9,9 @@
     <h1 class="subheader"> Hello World </h1>
     <div id="content"></div>
     <script type="text/jsx">
-      /** @jsx React.DOM */
-      var TripBox = React.createClass({
-        render: function() {
-          return (
-            <div class="tripBox">
-              <h1 class="subheader">Trip Listing</h1>
-              <TripList data={this.props.data}/>
-              <TripForm />
-            </div>
-          );
-        }
-      });
-      var TripList = React.createClass({
-        render: function() {
-          return (
-            <div class="tripList">
-              <Trip author="Tan Nguyen">Fun trip!</Trip>
-              <Trip author="Akshay Menon">Looking forward to it.</Trip>
-            </div>
-          );
-        }
-      });
-      var TripForm = React.createClass({
-        render: function() {
-          return (
-            <div class="tripForm">
+     /** @jsx React.DOM */
 
-            </div>
-          );
-        }
-      });
+
       var Trip = React.createClass({
         render: function() {
           return (
@@ -53,11 +23,74 @@
             </div>
           );
         }
-      })
+      });
+
+      var TripBox = React.createClass({
+        loadTripsFromServer: function() {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            mimeType: 'textPlain',
+            success: function(data) {
+              this.setState({data: data});
+              console.log('state data:' + this.state.data);
+            }.bind(this)
+          });
+        },
+        getInitialState: function() {
+          return {data: []};
+        },
+        componentWillMount: function() {
+          console.log('in mount');
+          this.loadTripsFromServer();
+          setInterval(
+            this.loadTripsFromServer.bind(this),
+            this.props.pollInterval
+          );
+        },
+        render: function() {
+          console.log('render state data:' + this.state.data);
+          return (
+            <div class="tripBox">
+              <h1 class="subheader">Trip Listing</h1>
+              <TripList data={this.state.data} />
+              <TripForm />
+            </div>
+          );
+        }
+      });
+
+      var TripList = React.createClass({
+        render: function() {
+          // var tripNodes = this.props.data.map(function(trip) {
+          //   return <Trip author={trip.name}>{trip.name}</Trip>;
+          // });
+          return (
+            <div class="tripList">
+              // {tripNodes}
+            </div>
+          );
+        }
+      });
+
+      var TripForm = React.createClass({
+        render: function() {
+          return (
+            <div class="tripForm">
+
+            </div>
+          );
+        }
+      });
+
+
+
       React.renderComponent(
-        <TripBox  data={data} />,
+        <TripBox  url="/trip" pollInterval={10000} />,
         document.getElementById('content')
       );
+
+
     </script>
   </body>
 </html>
@@ -94,5 +127,4 @@
   App.V.Trips = Backbone.View.extend({
 
   });
-  console.log("in studd.ejs");
 </script>

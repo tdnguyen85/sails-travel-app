@@ -37,8 +37,10 @@ module.exports.routes = {
   },
   '/test': {
     view: 'test/stuff'
+  },
+  '/polymer': {
+    view: 'polymer/poly'
   }
-
 
 };
 
