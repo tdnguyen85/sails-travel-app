@@ -2,3 +2,9 @@
 require('sails').lift(require('optimist').argv);
 require('assert');
 requre('events');
+
+
+// Match all routes
+app.get('*', function(req, res){
+  res.send(404);
+});

@@ -31,7 +31,11 @@ module.exports = {
   },
   showByName: function(req, res) {
     Trip.findByName(req.param('name')).done(function(err, trip) {
-
+      if (err) {
+        return console.log(err);
+      } else {
+        console.log("Trip displayed:", trip);
+      }
     });
   },
   showAll: function(req, res) {
@@ -39,6 +43,7 @@ module.exports = {
       if (err) {
         return console.log(err);
       } else {
+        res.json(trips);
         console.log("Trips found:", trips);
       }
     });
