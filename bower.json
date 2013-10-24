@@ -1,0 +1,20 @@
+{
+  "name": "travel_app",
+  "version": "1.0.0",
+  "main": "bower_components",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "*"
+  },
+  "devDependencies": {
+    "<test-framework-name>": "<version>"
+  }
+}

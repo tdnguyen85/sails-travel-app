@@ -38,8 +38,17 @@ module.exports.routes = {
   '/test': {
     view: 'test/stuff'
   },
+  '/fb': {
+    view: 'test/fb'
+  },
+  '/fb2': {
+    view: 'test/fb2'
+  },
   '/polymer': {
     view: 'polymer/poly'
+  },
+  '/polymer/x-foo': {
+    view: 'polymer/x-foo'
   }
 
 };

@@ -133,10 +133,25 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-less/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-coffee/tasks');
+  // load the handlebars plugin
+  grunt.loadTasks('node_modules/grunt-contrib-handlebars/tasks');
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    // configure the handlebars task
+    handlebars: {
+      dev: {
+        options : {
+          namespace: "JST"
+        },
+        files: {
+          "path/to/results.js": "path/to/source.hbs",
+          "path/to/another.js": ["path/to/sources/*.hbs", "path/to/more/*.hbs"]
+        }
+      }
+    },
 
     copy: {
       dev: {
@@ -465,22 +480,6 @@ module.exports = function (grunt) {
     'sails-linker:prodStylesJADE',
     'sails-linker:devTplJADE'
   ]);
-
-  // configure the handlebars task
-  handlebars: {
-    dev: {
-      options : {
-        namespace: "JST"
-      },
-      files: {
-        "path/to/results.js": "path/to/source.hbs",
-        "path/to/another.js": ["path/to/sources/*.hbs", "path/to/more/*.hbs"]
-      }
-    }
-  }
-
-  // load the handlebars plugin
-  grunt.loadTasks('grunt-contrib-handlebars');
 
   // A simple default task that runs the handlebars task
   grunt.registerTask('default', [

@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+    #header {width: 100%; height: 65px; background: #365d98; border-bottom: 1px solid #050b0b; position:fixed; top:0px; z-index:99999;}
 
+      #top-bar {
+        background-color: grey;
+        height: 100px;
+        margin: 0;
+        padding 3px;
+      }
+      #nav-bar {
+        background-color: green;
+        height: 1000px;
+      }
+      #content {
+        background-color: yellow;
+        height: 1000px;
+      }
+      #side-bar {
+        background-color: orange;
+        height: 1000px;
+      }
+
+    </style>
+    <link rel="stylesheet" href="/styles/react.css" />
     <script src="http://fb.me/react-0.5.0.min.js"></script>
     <script src="http://fb.me/JSXTransformer-0.5.0.js"></script>
   </head>
   <body>
-    <h1 class="subheader"> Hello World </h1>
-    <div id="content"></div>
-    <script type="text/jsx">
-     /** @jsx React.DOM */
+    <div id="header"></div>
 
+    <h1 class="subheader"> Hello World </h1>
+    <div class="row">
+      <div class="small-12 large-12 columns" id="top-bar">
+      </div>
+    </div><!-- row -->
+    <div class="row">
+      <div class="small-3 large-3 columns" id="nav-bar"></div>
+      <div class="small-6 large-6 columns" id="content"></div>
+      <div class="small-3 large-3 columns" id="side-bar"></div>
+    </div><!-- row -->
+    <script type="text/jsx">
+      /** @jsx React.DOM */
 
       var Trip = React.createClass({
         render: function() {
@@ -33,7 +65,7 @@
             mimeType: 'textPlain',
             success: function(data) {
               this.setState({data: data});
-              console.log('state data:' + this.state.data);
+              console.log(this.state.data);
             }.bind(this)
           });
         },
@@ -51,8 +83,8 @@
         render: function() {
           console.log('render state data:' + this.state.data);
           return (
-            <div class="tripBox">
-              <h1 class="subheader">Trip Listing</h1>
+            <div className="tripBox">
+              <h1 className="subheader">Trip Listing</h1>
               <TripList data={this.state.data} />
               <TripForm />
             </div>
@@ -62,12 +94,12 @@
 
       var TripList = React.createClass({
         render: function() {
-          // var tripNodes = this.props.data.map(function(trip) {
-          //   return <Trip author={trip.name}>{trip.name}</Trip>;
-          // });
+          var tripNodes = this.props.data.map(function(trip) {
+            return <Trip author={trip.name}>{trip.name}</Trip>;
+          });
           return (
-            <div class="tripList">
-              // {tripNodes}
+            <div className="tripList">
+              {tripNodes}
             </div>
           );
         }
@@ -76,14 +108,12 @@
       var TripForm = React.createClass({
         render: function() {
           return (
-            <div class="tripForm">
+            <div className="tripForm">
 
             </div>
           );
         }
       });
-
-
 
       React.renderComponent(
         <TripBox  url="/trip" pollInterval={10000} />,
@@ -95,36 +125,3 @@
   </body>
 </html>
 
-<div>
-
-</div>
-
-<script>
-  window.App = {
-    M: {},
-    V: {},
-    C: {},
-    i: {
-      m: {},
-      v: {},
-      c: {}
-    }
-  };
-
-  App.M.Trip = Backbone.Model.extend({
-    urlRoot: "/trip"
-  });
-
-  App.C.Trips = Backbone.Collection.extend({
-    url: "trip",
-    model: App.M.Trip
-  });
-
-  App.V.Trip = Backbone.View.extend({
-
-  });
-
-  App.V.Trips = Backbone.View.extend({
-
-  });
-</script>

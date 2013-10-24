@@ -24,6 +24,9 @@ module.exports = {
     userId: 'INT',
     firstName: 'string',
     lastName: 'string',
+    age: 'INT',
+    gender: 'string',
+    location: 'string',
 
     // Define a custom instance method
     fullName: function() {

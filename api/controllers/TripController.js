@@ -71,7 +71,7 @@ module.exports = {
     });
   },
   destroy: function(req, res) {
-    Trip.destroy({
+    Trip.findByName(req.params('name')).destroy({
 
     }).done(function(err, trip) {
       if (err) {
@@ -80,6 +80,36 @@ module.exports = {
         console.log("Trip deleted:", trip);
       }
     });
+  },
+  seedTrips: function(req, res) {
+    var seeds = [
+      {name: "Journey to the West", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Friends", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Price is Right", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Jerry Springer Show", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Late Night With Jay Leno", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Tonight Show", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Family Guy", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Simpson", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Third Rock from the Sun", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Big Bang Thoery", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "The Jersey Shore", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "American Idol", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Big Brother", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Prison Break", begins: "12/1/2013", ends: "12/15/2013"},
+      {name: "Law and Order", begins: "12/1/2013", ends: "12/15/2013"}
+    ];
+
+    seeds.forEach(function(item) {
+      Trip.create(item).done(function(err, item) {
+        if (err) {
+          return console.log(err);
+        } else {
+          console.log("Trip created:", item);
+        }
+      });
+    });
+
   },
 
   /**

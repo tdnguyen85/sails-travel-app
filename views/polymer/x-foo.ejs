@@ -1,0 +1,19 @@
+<polymer-element name="x-foo" attributes="owner color">
+  <template>
+    <p>
+    This is a <strong>{{owner}}</strong>'s tk-element.
+    He likes the color <b style="color: {{color}}">{{color}}</b>.
+    </p>
+    <button on-click="setFocus">Set focus to text input</button>
+    <input id="nameInput" value="{{owner}}" placeholder="Your name here...">
+  </template>
+  <script>
+    Polymer('tk-node-finding', {
+      color: "red",
+      owner: "Daniel",
+      setFocus: function() {
+        this.$.nameInput.focus();
+      }
+    });
+  </script>
+</polymer-element>
