@@ -101,11 +101,11 @@ module.exports = {
     ];
 
     seeds.forEach(function(item) {
-      Trip.create(item).done(function(err, item) {
+      Trip.create(item).done(function(err, trip) {
         if (err) {
           return console.log(err);
         } else {
-          console.log("Trip created:", item);
+          console.log("Trip created:", trip);
         }
       });
     });

@@ -18,12 +18,33 @@
 module.exports = {
 
   create: function(req, res) {
-
+    User.create({name: req.params('name')}).done(function(err, user) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.log("User created:", user);
+      }
+    });
   },
   destroy: function(req, res) {
 
   },
-
+  seedUsers: function(req, res) {
+    var seeds = [
+      {name: "Johnny Knoxville"},
+      {name: "Steve Harvey"},
+      {name: "Jerome McKeil"}
+    ];
+    seeds.forEach(function(user) {
+      User.create(user).done(function(err, user) {
+        if (err) {
+          return console.log(err);
+        } else {
+          console.log("User created:", user);
+        }
+      });
+    });
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`

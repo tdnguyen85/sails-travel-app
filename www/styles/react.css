@@ -1,0 +1,9 @@
+#top-bar {
+  background-color: grey;
+  height: 100px;
+  margin: 0;
+  padding 3px;
+}
+#content {
+  background-color: yellow;
+}

@@ -22,10 +22,23 @@
         background-color: orange;
         height: 1000px;
       }
+      .trip {
+        border: 1px black solid;
+        margin: 2px;
+      }
+      .example-enter {
+        opacity: 0.01;
+        transition: opacity .5s ease-in;
+      }
+
+      .example-enter.example-enter-active {
+        opacity: 0.99;
+      }
+
 
     </style>
     <link rel="stylesheet" href="/styles/react.css" />
-    <script src="http://fb.me/react-0.5.0.min.js"></script>
+
     <script src="http://fb.me/JSXTransformer-0.5.0.js"></script>
   </head>
   <body>
@@ -44,14 +57,18 @@
     <script type="text/jsx">
       /** @jsx React.DOM */
 
+      var ReactTransitionGroup = React.addons.TransitionGroup;
+
       var Trip = React.createClass({
         render: function() {
           return (
-            <div class="trip">
-              <h6 class="tripAuthor">
+            <div className="trip">
+              <ReactTransitionGroup transitionName="example">
+              <h6 className="tripAuthor">
                 {this.props.author}
               </h6>
               {this.props.children}
+              </ReactTransitionGroup>
             </div>
           );
         }
@@ -66,6 +83,20 @@
             success: function(data) {
               this.setState({data: data});
               console.log(this.state.data);
+            }.bind(this)
+          });
+        },
+        handleTripSubmit: function(trip) {
+          var trips = this.state.data;
+          trips.push(trip);
+          this.setState({data: trips});
+          $.ajax({
+            url: this.props.url,
+            data: trip,
+            dataType: 'json',
+            mimeType: 'textPlain',
+            success: function(data) {
+              this.setState({data: data});
             }.bind(this)
           });
         },
@@ -85,8 +116,8 @@
           return (
             <div className="tripBox">
               <h1 className="subheader">Trip Listing</h1>
+              <TripForm onTripSubmit={this.handleTripSubmit}/>
               <TripList data={this.state.data} />
-              <TripForm />
             </div>
           );
         }
@@ -99,18 +130,34 @@
           });
           return (
             <div className="tripList">
+              <ReactTransitionGroup transitionName="example">
               {tripNodes}
+              </ReactTransitionGroup>
             </div>
           );
         }
       });
 
       var TripForm = React.createClass({
+        handleSubmit: function() {
+          var author = this.refs.author.getDOMNode().value.trim();
+          var text = this.refs.text.getDOMNode().value.trim();
+          if (!text || !author) {
+            return false;
+          }
+          // TODO: send request to the server
+          this.props.onTripSubmit({name: author});
+          this.refs.author.getDOMNode().value = '';
+          this.refs.text.getDOMNode().value = '';
+          return false;
+        },
         render: function() {
           return (
-            <div className="tripForm">
-
-            </div>
+            <form class="tripForm" onSubmit={this.handleSubmit}>
+              <input type="text" placeholder="Your name" ref="author"/>
+              <input type="text" placeholder="Say something..." ref="text"/>
+              <input type="submit" />
+            </form>
           );
         }
       });
