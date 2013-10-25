@@ -26,6 +26,9 @@ module.exports = {
       }
     });
   },
+  find: function(req, res) {
+    User.find()
+  },
   destroy: function(req, res) {
 
   },
