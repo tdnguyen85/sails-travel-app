@@ -19,7 +19,7 @@ body  {
 #header {
   width: 100%;
   height: 46px;
-  background: #365d98;
+  background: navy;
   border-bottom: 1px solid #050b0b;
   position:fixed;
   top:0px;
@@ -62,7 +62,7 @@ body  {
 #searchform input.btn {width:11px; height:13px; background: url(http://www.erhanbasa.com/uploads/old/fb/fb-sprite.png) no-repeat -31px -350px; right: 15px; top: 10px; z-index:10; position:absolute; cursor:pointer;}
 
 /*  Timeline Header */
-#timeline-head  {height:53px; width: 100%; background: #1d1e23; position:fixed; top:46px; z-index:99999;}
+#timeline-head  {height:53px; width: 100%; background: #1d1e23; position:fixed; top:46px; z-index:1000;}
 #timeline-head .page-name {background: url(http://www.erhanbasa.com/uploads/old/fb/name-icon.png) no-repeat left center;  font: normal 20px/53px 'Strait',sans-serif; color:#d8d8d8; padding-left:40px; margin-left: 20px; display: inline-block; float:left; text-shadow: 1px 1px 1px rgba(0,0,0,.5); cursor:pointer;}
 #timeline-head .page-name:hover {color:#fff;}
 
@@ -164,6 +164,129 @@ body  {
 @media (max-width:650px) {
 #timeline div[class*="block"]   {width:50%; height:180px!important;}
 }
+
+/* For popup box */
+label {
+        position: relative;
+}
+
+.box {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 1000000;
+
+  /* Prevent some white flashing in Safari 5.1 */
+  -webkit-backface-visibility: hidden;
+
+  background-color: #eeeeee;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#999999));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #999999);
+  background-image:    -moz-linear-gradient(top, #eeeeee, #999999);
+  background-image:     -ms-linear-gradient(top, #eeeeee, #999999);
+  background-image:      -o-linear-gradient(top, #eeeeee, #999999);
+
+  -moz-border-radius:    3px;
+  -webkit-border-radius: 3px;
+  border-radius:         3px;
+
+  -moz-background-clip:    padding;
+  -webkit-background-clip: padding-box;
+  background-clip:         padding-box;
+
+  width: 260px;
+  height: 350px;
+  padding: 8px;
+  margin: 24px 0;
+  border: black 1px solid;
+  opacity: 0;
+  overflow: scroll;
+
+  -webkit-transform: scale(0) skew(50deg);
+  -moz-transform:    scale(0) skew(50deg);
+  -ms-transform:     scale(0) skew(50deg);
+  -o-transform:      scale(0) skew(50deg);
+
+  -webkit-transform-origin: 0px -30px;
+  -moz-transform-origin:    0px -30px;
+  -ms-transform-origin:     0px -30px;
+  -o-transform-origin:      0px -30px;
+
+  -webkit-transition: -webkit-transform ease-out .35s, opacity ease-out .4s;
+  -moz-transition:    -moz-transform    ease-out .35s, opacity ease-out .4s;
+  -ms-transition:     -ms-transform     ease-out .35s, opacity ease-out .4s;
+  -o-transition:      -o-transform      ease-out .35s, opacity ease-out .4s;
+}
+
+.box:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 30px;
+  border-bottom: 20px solid #eee;
+  border-left:   14px solid transparent;
+  border-right:  14px solid transparent;
+  width:  0;
+  height: 0;
+}
+
+.popUpControl:checked ~ label > .box {
+  opacity: 1;
+  -webkit-transform: scale(1) skew(0deg);
+  -moz-transform:    scale(1) skew(0deg);
+  -ms-transform:     scale(1) skew(0deg);
+  -o-transform:      scale(1) skew(0deg);
+}
+.popUpControl {
+  display: none;
+}
+
+.button {
+  /*background: blue;*/
+  color: white;
+  padding: 3px;
+}
+
+/* For dog example */
+.box img {
+    -moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    border-radius:         10px;
+}
+#doggiezzz:checked ~ label > span:first-child {
+  display: none;
+}
+#doggiezzz:checked ~ label:before {
+  content: "X";
+}
+
+
+/* For link example */
+.link { color: blue; text-decoration: underline; }
+.title { display: block; font-weight: bold; margin: 0 0 10px 0; color: black; font: bold 16px Sans-Serif; text-decoration: none; }
+.copy { color: black; text-decoration: none;  }
+
+
+.animateList-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.animateList-enter.animateList-enter-active {
+  opacity: 0.99;
+}
+
+.note-box {
+  display: none;
+  width: 300px;
+  height: 380px;
+  opacity: 0.9;
+  background-color: white;
+  border: black 1px solid;
+  position: absolute;
+  z-index: 2000000;
+  overflow: scroll;
+}
 </style>
 
 <div id="container">
@@ -187,12 +310,26 @@ body  {
       </ul>
 
       <ul id="head-navigation">
-        <li><a href="#" class="current">News</a></li>
-        <li><a href="#">Messages</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Photos</a></li>
-        <li><a href="#">Find Friends</a></li>
+        <li>
+            <input type="checkbox" id="doggiezzz" class="popUpControl">
+            <label for="doggiezzz" class="button">
+               <span>Notifications</span>
+               <div id="notification" class="box">
+
+              </div>
+            </label>
+        </li>
+        <li><a href="#" class="box-target">Messages</a></li>
+        <li><a href="#" class="box-target">Events</a></li>
+        <li><a href="#" class="box-target">Photos</a></li>
+        <li><a href="#" class="box-target">Find Friends</a></li>
+
       </ul>
+      <div class="note-box">
+
+      </div>
+
+
 
       <div id="head-search">
         <span>Find Friends</span>
@@ -207,6 +344,14 @@ body  {
 
     <div id="timeline-head">
       <span class="page-name">Hi Samantha</span>
+      <div id="head-search">
+        <span>Find Friends</span>
+        <form id="searchform">
+          <input placeholder="Search">
+          <input type="button" class="btn">
+        </form>
+      </div>
+
     </div>
 
 
@@ -521,3 +666,97 @@ body  {
 
     </div>
   </div>
+
+
+<script type="text/jsx">
+/**
+ * @jsx React.DOM
+ */
+
+var ReactTransitionGroup = React.addons.TransitionGroup;
+
+var NotificationBox = React.createClass({
+  loadNoteficationsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      mimeType: 'textPlain',
+      success: function(data) {
+        this.setState({data: data});
+        console.log(this.state.data);
+      }.bind(this)
+    });
+  },
+  getInitialState: function(){
+    return {data: []};
+  },
+  componentWillMount: function(){
+    this.loadNoteficationsFromServer();
+    setInterval(
+      this.loadNoteficationsFromServer.bind(this),
+      this.props.pollInterval
+    );
+  },
+  render: function() {
+    return(
+      <div className="notificationBox">
+        <h4 className="subheader">Your Notifications</h4>
+        <NotificationList data={this.state.data} />
+      </div>
+    );
+  }
+
+});
+
+var Note = React.createClass({
+  render: function() {
+    return (
+      <ul className="note">
+        <li><h6 className="subheader">{this.props.children}</h6></li>
+      </ul>
+    );
+  }
+});
+
+var NotificationList = React.createClass({
+  render: function() {
+    var noteNodes = this.props.data.map(function(item) {
+      return <Note >{item.note}</Note>;
+    });
+    return (
+      <div className="notificationList">
+        <ReactTransitionGroup transitionName="animateList">
+        {noteNodes}
+        </ReactTransitionGroup>
+      </div>
+    );
+  }
+})
+$(document).ready(function() {
+
+  React.renderComponent(
+    <NotificationBox url="/notification" pollInterval={10000} />,
+    document.getElementById('notification')
+  );
+
+  $(".box-target").on('mouseover', function() {
+    $(".note-box").css("display", "block");
+  });
+
+  $(".box-target").on('mouseout', function() {
+    $(".note-box").css("display", "none");
+  });
+
+
+
+$("notification").on('click', function() {
+  console.log('clicked');
+  React.renderComponent(
+    <NotificationBox url="/notification" pollInterval={1000000} />,
+    document.getElementById('notification')
+  );
+});
+
+
+});
+</script>

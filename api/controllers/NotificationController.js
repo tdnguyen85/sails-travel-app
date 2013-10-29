@@ -19,7 +19,7 @@ module.exports = {
 
   create: function(req, res) {
     Notification.create({
-      note: req.paras('note'),
+      note: req.params('note'),
       source: req.params('source')
     }).done(function(err, notification) {
       if (err) {

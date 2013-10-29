@@ -56,6 +56,17 @@ module.exports = {
         return console.log(err);
       }else {
         console.log("Trip created:", trip);
+
+        Notification.create({
+          note: "A new trip was created",
+          source: req.param('name')
+        }).done(function(err, notification) {
+          if (err) {
+            return console.log(err);
+          } else {
+            console.log("Notification created:", notification);
+          }
+        });
       }
     });
   },
