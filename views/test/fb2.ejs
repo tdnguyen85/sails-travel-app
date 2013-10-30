@@ -53,11 +53,11 @@ body  {
 #head-navigation li a.current {opacity:1;}
 
 /*  Header  Search  */
-#head-search    {float:right; width:350px;}
+#head-search    {float:right; width:600px;}
 #head-search span {float:left; color: #fff; font:normal 12px/46px 'Strait',sans-serif;}
 
 #searchform   {float:left; position:relative; margin-right:20px; margin-top:8px; }
-#searchform input {width:250px; height:30px; background:#2a4675; border:0; border-radius: 18px; margin-left:10px; text-indent:20px; color:whitesmoke; box-shadow: inset 2px 2px 2px rgba(0,0,0,.15) ;}
+#searchform input {width:500px; height:30px; background:#2a4675; border:0; border-radius: 5px; margin-left:10px; text-indent:20px; color:whitesmoke; box-shadow: inset 2px 2px 2px rgba(0,0,0,.15) ;}
 #searchform input:focus {outline:0;}
 #searchform input.btn {width:11px; height:13px; background: url(http://www.erhanbasa.com/uploads/old/fb/fb-sprite.png) no-repeat -31px -350px; right: 15px; top: 10px; z-index:10; position:absolute; cursor:pointer;}
 
@@ -277,7 +277,6 @@ label {
 }
 
 .note-box {
-  display: none;
   width: 300px;
   height: 380px;
   opacity: 0.9;
@@ -286,6 +285,10 @@ label {
   position: absolute;
   z-index: 2000000;
   overflow: scroll;
+}
+
+.hidden {
+  display:none;
 }
 </style>
 
@@ -325,7 +328,7 @@ label {
         <li><a href="#" class="box-target">Find Friends</a></li>
 
       </ul>
-      <div class="note-box">
+      <div class="note-box hidden">
 
       </div>
 
@@ -498,175 +501,9 @@ label {
           </div>
         </div>
       </div>
-      <div class="block2x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-2.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="block1x2 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-      </div>
-
-      <div class="block2x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-2.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="block1x2 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-      </div>
-      <div class="block1x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="block2x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-2.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="block1x2 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-      </div>
-
-      <div class="block2x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-2.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="block1x2 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-      </div>
-
-      <div class="block1x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
-
 
 <script type="text/jsx">
 /**
@@ -674,6 +511,29 @@ label {
  */
 
 var ReactTransitionGroup = React.addons.TransitionGroup;
+
+var Note = React.createClass({
+  render: function() {
+    return (
+        <li><h6 className="subheader">{this.props.children}</h6></li>
+    );
+  }
+});
+
+var NotificationList = React.createClass({
+  render: function() {
+    var noteNodes = this.props.data.map(function(item) {
+      return <Note >{item.note}</Note>;
+    });
+    return (
+      <div className="notificationList">
+        <ReactTransitionGroup transitionName="animateList">
+        {noteNodes}
+        </ReactTransitionGroup>
+      </div>
+    );
+  }
+});
 
 var NotificationBox = React.createClass({
   loadNoteficationsFromServer: function() {
@@ -708,55 +568,35 @@ var NotificationBox = React.createClass({
 
 });
 
-var Note = React.createClass({
-  render: function() {
-    return (
-      <ul className="note">
-        <li><h6 className="subheader">{this.props.children}</h6></li>
-      </ul>
-    );
-  }
-});
 
-var NotificationList = React.createClass({
-  render: function() {
-    var noteNodes = this.props.data.map(function(item) {
-      return <Note >{item.note}</Note>;
-    });
-    return (
-      <div className="notificationList">
-        <ReactTransitionGroup transitionName="animateList">
-        {noteNodes}
-        </ReactTransitionGroup>
-      </div>
-    );
-  }
-})
 $(document).ready(function() {
+  console.log('ready');
 
+  // React.renderComponent(
+  //   <NotificationBox url="/notification" pollInterval={10000} />,
+  //   document.getElementById('notification')
+  // );
+
+  $(".box-target").on('click', function() {
+    console.log('box');
+    $("div.note-box").toggleClass("hidden");
+  });
+
+
+
+
+
+$("#notification").on('click', function() {
+  console.log('clicked');
   React.renderComponent(
     <NotificationBox url="/notification" pollInterval={10000} />,
     document.getElementById('notification')
   );
-
-  $(".box-target").on('mouseover', function() {
-    $(".note-box").css("display", "block");
-  });
-
-  $(".box-target").on('mouseout', function() {
-    $(".note-box").css("display", "none");
-  });
-
-
-
-$("notification").on('click', function() {
-  console.log('clicked');
-  React.renderComponent(
-    <NotificationBox url="/notification" pollInterval={1000000} />,
-    document.getElementById('notification')
-  );
 });
 
 
 });
+
+
 </script>
+
