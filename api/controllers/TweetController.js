@@ -20,7 +20,7 @@ module.exports = {
 
   search: function(req, res) {
 
-    console.log(req.params.q);
+    console.log('hi');
     var Twit = require('twit');
 
     var T = new Twit({
@@ -30,13 +30,15 @@ module.exports = {
       access_token_secret: 'dtTo64OVoF1raYj3S6JAwB4UYmhQ2x9yZeF3y3BFxHKo8'
     });
 
-    T.get('search/tweets', { q: req.params.q, count: 100 }, function(err, reply) {
+    T.get('search/tweets', { q: req.query.q, count: 100 }, function(err, reply) {
       if (err) {
         return console.log(err);
       } else {
-        console.log("Success tweeting", reply);
+        console.log("Success tweeting", reply.statuses[0].user);
+        res.send(reply);
       }
     });
+
 
   },
 

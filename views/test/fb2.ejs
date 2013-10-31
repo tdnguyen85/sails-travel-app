@@ -46,7 +46,7 @@ body  {
 #jewel-container li.notifications a {background-position: -50px -186px;}
 
 /*  Header Navigation */
-#head-navigation  {width:400px; float:left;}
+#head-navigation  {width:500px; float:left;}
 #head-navigation li {float:left; margin:0 10px;}
 #head-navigation li a {color:#fff; opacity: .7; font: normal 16px/46px 'Strait',sans-serif;}
 #head-navigation li a:hover,
@@ -266,7 +266,7 @@ label {
 .title { display: block; font-weight: bold; margin: 0 0 10px 0; color: black; font: bold 16px Sans-Serif; text-decoration: none; }
 .copy { color: black; text-decoration: none;  }
 
-
+/* animation for React.js components */
 .animateList-enter {
   opacity: 0.01;
   transition: opacity .5s ease-in;
@@ -276,13 +276,35 @@ label {
   opacity: 0.99;
 }
 
+#top-box {
+  height: 150px;
+  width: 100%;
+  margin: 0px;
+  padding: 5px;
+  position: absolute;
+  top: 100px;
+  background-color: black;
+  opacity: 0.8;
+  z-index: 10000;
+}
+#box-left {
+  overflow: scroll;
+}
+#top-box div[class*="block1x"] {width:14.284%;}
+#top-box div[class*="block2x"] {width:28.566%;}
+#top-box div[class*="block3x"] {width:42.846%;}
+#top-box div[class*="block"][class*="x1"]  {height:150px;}
+#top-box div[class*="block"][class*="x2"]  {height:300px;}
+#top-box div[class*="block"][class*="x3"]  {height:450px;}
+#top-box .block { float: left; overflow:scroll; }
+
 .note-box {
   width: 300px;
   height: 380px;
   opacity: 0.9;
   background-color: white;
   border: black 1px solid;
-  position: absolute;
+  position: fixed;
   z-index: 2000000;
   overflow: scroll;
 }
@@ -346,15 +368,30 @@ label {
 
 
     <div id="timeline-head">
-      <span class="page-name">Hi Samantha</span>
+
+      <span id="slide-top-box" class="page-name">Hi Samantha</span>
       <div id="head-search">
         <span>Find Friends</span>
         <form id="searchform">
-          <input placeholder="Search">
-          <input type="button" class="btn">
+          <input id="search-twitter" placeholder="Search Twitter">
+          <input id="search-submit" type="button" class="btn">
         </form>
       </div>
+    </div>
 
+    <div id="top-box" class="hidden">
+      <div class="block1x1 block">
+        <span id="close-top-box">X</span>
+      </div>
+      <div class="block3x1 block">
+        <form>
+          <input type="text" id="">
+          <button style="opacity: 1">Submit</button>
+        </form>
+      </div>
+      <div class="block3x1 block" id="box-left">
+
+      </div>
     </div>
 
 
@@ -502,6 +539,9 @@ label {
         </div>
       </div>
 
+      <div id="tweet-box" class="">
+
+      </div>
     </div>
   </div>
 
@@ -513,9 +553,15 @@ label {
 var ReactTransitionGroup = React.addons.TransitionGroup;
 
 var Note = React.createClass({
+  handleClick: function() {
+
+  },
   render: function() {
     return (
-        <li><h6 className="subheader">{this.props.children}</h6></li>
+        <div className="note">
+          <span className="close-note"><a href="#" onClick={this.handleClick}>X</a></span>
+          <h6 className="subheader">{this.props.children}</h6>
+        </div>
     );
   }
 });
@@ -568,13 +614,77 @@ var NotificationBox = React.createClass({
 
 });
 
+var TweetItem = React.createClass({
+  render: function() {
+    return(
+      <div className="tweet-item">
+        <ReactTransitionGroup transitionName="animateList">
+          <h6 className="tripAuthor">
+            Tweet
+          </h6>
+          {this.props.children}
+        </ReactTransitionGroup>
+      </div>
+    );
+  }
+});
+var TweetList = React.createClass({
+  render: function() {
+    var tweetNodes = this.props.data.map(function(item) {
+      return <TweetItem>{item.text}</TweetItem>;
+    });
+    return (
+      <div className="tweet-list">
+          {tweetNodes}
+      </div>
+    );
+  }
+});
+var TweetManager = React.createClass({
+  loadTweetsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      data: {q: this.props.query},
+      dataType: 'json',
+      mimeType: 'textPlain',
+      success: function(data) {
+        console.log(data.statuses);
+        this.setState({data: data.statuses});
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentWillMount: function() {
+    this.loadTweetsFromServer();
+  },
+  render: function() {
+    var tweetNodes = this
+    return(
+      <div className="tweet-manager">
+
+        <TweetList data={this.state.data} />
+
+      </div>
+    );
+  }
+});
 
 $(document).ready(function() {
   console.log('ready');
 
+  //$("#top-box").hide();
+  $("#slide-top-box").on("click", function() {
+    $("#top-box").slideDown(1000, "linear");
+  });
+  $("#close-top-box").on("click", function() {
+    $("#top-box").slideUp("slow");
+  });
+
   // React.renderComponent(
   //   <NotificationBox url="/notification" pollInterval={10000} />,
-  //   document.getElementById('notification')
+  //   document.getElementById('box-left')
   // );
 
   $(".box-target").on('click', function() {
@@ -582,7 +692,9 @@ $(document).ready(function() {
     $("div.note-box").toggleClass("hidden");
   });
 
-
+$.get('/tweet/search', {q: "nba"}).done(function(data) {
+  console.log("twitter", data);
+});
 
 
 
@@ -590,9 +702,23 @@ $("#notification").on('click', function() {
   console.log('clicked');
   React.renderComponent(
     <NotificationBox url="/notification" pollInterval={10000} />,
-    document.getElementById('notification')
+    document.getElementById('box-left')
   );
 });
+
+$("#search-submit").on("click", function(e) {
+  e.preventDefault();
+  console.log("clicked tweet");
+  var searchQuery = $("#search-twitter").val();
+  console.log(searchQuery);
+  $("#tweet-box").empty();
+  //React.unmountComponentAtNode(document.getElementById('tweet-box');
+  React.renderComponent(
+    <TweetManager url="/tweet/search" query={searchQuery} />,
+    document.getElementById('tweet-box')
+  );
+});
+
 
 
 });

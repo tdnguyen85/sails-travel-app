@@ -27,7 +27,7 @@ module.exports = {
     });
   },
   find: function(req, res) {
-    User.find()
+    User.find();
   },
   destroy: function(req, res) {
 
