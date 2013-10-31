@@ -283,8 +283,7 @@ label {
   padding: 5px;
   position: absolute;
   top: 100px;
-  background-color: black;
-  opacity: 0.8;
+  background: rgba(33,33,33,.7);
   z-index: 10000;
 }
 #box-left {
@@ -311,6 +310,12 @@ label {
 
 .hidden {
   display:none;
+}
+
+.tweet-item {
+  border-bottom: black 1px solid ;
+  padding: 3px;
+  margin: 5px;
 }
 </style>
 
@@ -615,13 +620,20 @@ var NotificationBox = React.createClass({
 });
 
 var TweetItem = React.createClass({
+  remove: function(e) {
+    e.preventDefault();
+    console.log(this.refs.tweetItem.getDOMNode());
+    this.refs.tweetItem.getDOMNode().remove();
+  },
   render: function() {
     return(
-      <div className="tweet-item">
+      <div className="tweet-item" ref="tweetItem">
         <ReactTransitionGroup transitionName="animateList">
           <h6 className="tripAuthor">
             Tweet
           </h6>
+          <a onClick={this.remove} href="#">X</a>
+
           {this.props.children}
         </ReactTransitionGroup>
       </div>
@@ -660,7 +672,6 @@ var TweetManager = React.createClass({
     this.loadTweetsFromServer();
   },
   render: function() {
-    var tweetNodes = this
     return(
       <div className="tweet-manager">
 
@@ -692,11 +703,6 @@ $(document).ready(function() {
     $("div.note-box").toggleClass("hidden");
   });
 
-$.get('/tweet/search', {q: "nba"}).done(function(data) {
-  console.log("twitter", data);
-});
-
-
 
 $("#notification").on('click', function() {
   console.log('clicked');
@@ -711,8 +717,6 @@ $("#search-submit").on("click", function(e) {
   console.log("clicked tweet");
   var searchQuery = $("#search-twitter").val();
   console.log(searchQuery);
-  $("#tweet-box").empty();
-  //React.unmountComponentAtNode(document.getElementById('tweet-box');
   React.renderComponent(
     <TweetManager url="/tweet/search" query={searchQuery} />,
     document.getElementById('tweet-box')
