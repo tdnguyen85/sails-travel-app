@@ -317,6 +317,56 @@ label {
   padding: 3px;
   margin: 5px;
 }
+.white-text {
+  color: white;
+  margin: 2px;
+  padding: 2px;
+}
+.small-line {
+  height: 1px;
+  width: 96%;
+  margin: 3px;
+  background-color: white;
+}
+#status-input {
+  background-color: black;
+  border-radius: 3px;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  height: 60px;
+}
+#searchform   {
+  float:left;
+  position:relative;
+  margin-right:20px;
+  margin-top:8px;
+}
+#searchform input {
+  width:500px;
+  height:30px;
+  background:#2a4675;
+  border:0; border-radius: 5px;
+  margin-left:10px;
+  text-indent:20px;
+  color:whitesmoke;
+  box-shadow: inset 2px 2px 2px rgba(0,0,0,.15) ;
+}
+#searchform input:focus {
+  outline:0;
+}
+#searchform input.btn {
+  width:11px;
+  height:13px;
+  background: url(http://www.erhanbasa.com/uploads/old/fb/fb-sprite.png) no-repeat -31px -350px;
+  right: 15px;
+  top: 10px;
+  z-index:10;
+  position:absolute;
+  cursor:pointer;
+}
+
 </style>
 
 <div id="container">
@@ -387,15 +437,20 @@ label {
     <div id="top-box" class="hidden">
       <div class="block1x1 block">
         <span id="close-top-box">X</span>
+        <p class="white-text">Left Block</p>
+        <div class="small-line"></div>
       </div>
       <div class="block3x1 block">
+        <p class="white-text">Status Update</p>
+        <div class="small-line"></div>
         <form>
-          <input type="text" id="">
-          <button style="opacity: 1">Submit</button>
+          <input type="text" id="status-input">
+          <input type="button" class="btn">Submit</button>
         </form>
       </div>
       <div class="block3x1 block" id="box-left">
-
+        <p class="white-text">Left Block</p>
+        <div class="small-line"></div>
       </div>
     </div>
 
