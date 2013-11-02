@@ -281,7 +281,7 @@ label {
   width: 100%;
   margin: 0px;
   padding: 5px;
-  position: absolute;
+  position: fixed;
   top: 100px;
   background: rgba(33,33,33,.7);
   z-index: 10000;
@@ -321,6 +321,7 @@ label {
   color: white;
   margin: 2px;
   padding: 2px;
+  font-weight: bolder;
 }
 .small-line {
   height: 1px;
@@ -328,40 +329,41 @@ label {
   margin: 3px;
   background-color: white;
 }
-#status-input {
-  background-color: black;
+#status-container {
+  width: 100%;
+  padding: 5px;
+  margin: 2px;
+}
+#status-form input {
+  background: black;
+  border: 0px;
   border-radius: 3px;
   margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
+  text-indent: 20px;
+  color: whitesmoke;
+  box-shadow: inset 3px 3px 3px rgba(0,0,0,.2);
   width: 90%;
   height: 60px;
 }
-#searchform   {
+#status-form   {
   float:left;
   position:relative;
-  margin-right:20px;
-  margin-top:8px;
+  margin-right: auto;
+  margin-top:10px;
 }
-#searchform input {
-  width:500px;
-  height:30px;
-  background:#2a4675;
-  border:0; border-radius: 5px;
-  margin-left:10px;
-  text-indent:20px;
-  color:whitesmoke;
-  box-shadow: inset 2px 2px 2px rgba(0,0,0,.15) ;
-}
-#searchform input:focus {
+
+#status-form input:focus {
   outline:0;
 }
-#searchform input.btn {
-  width:11px;
-  height:13px;
-  background: url(http://www.erhanbasa.com/uploads/old/fb/fb-sprite.png) no-repeat -31px -350px;
+#status-form input.btn {
+  width:30px;
+  height:40px;
+  background: white;
+  content: "Enter";
   right: 15px;
-  top: 10px;
+  float: right;
   z-index:10;
   position:absolute;
   cursor:pointer;
@@ -443,10 +445,14 @@ label {
       <div class="block3x1 block">
         <p class="white-text">Status Update</p>
         <div class="small-line"></div>
-        <form>
-          <input type="text" id="status-input">
-          <input type="button" class="btn">Submit</button>
-        </form>
+
+        <div id="status-container">
+          <form id="status-form">
+            <input type="text" id="status-input">
+            <input type="button" class="btn" value="Go">
+          </form>
+        </div>
+
       </div>
       <div class="block3x1 block" id="box-left">
         <p class="white-text">Left Block</p>
