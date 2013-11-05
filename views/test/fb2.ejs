@@ -103,6 +103,44 @@ body  {
 #timeline div[class*="block3x2"] .commentcontainer:before,
 #timeline div[class*="block2x3"] .commentcontainer:before  {width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid white; position: absolute; content: ''; top: -20px; left: 40px;}
 
+/*  Timeline2 12 columns layout */
+#timeline2 div[class*="block1x"] {width:8.33%;}
+#timeline2 div[class*="block2x"] {width:16.66%;}
+#timeline2 div[class*="block3x"] {width:25.0%;}
+#timeline2 div[class*="block4x"] {width:33.32%;}
+#timeline2 div[class*="block5x"] {width:42.846%;}
+#timeline2 div[class*="block6x"] {width:50.0%;}
+#timeline2 div[class*="block7x"] {width:58.33%;}
+#timeline2 div[class*="block8x"] {width:66.66%;}
+#timeline2 div[class*="block9x"] {width:75.0%;}
+#timeline2 div[class*="block10x"] {width:83.32%;}
+#timeline2 div[class*="block11x"] {width:92.846%;}
+#timeline2 div[class*="block12x"] {width:100.0%;}
+
+
+#timeline2 div[class*="block"][class*="x1"]  {height:250px;}
+#timeline2 div[class*="block"][class*="x2"]  {height:500px;}
+#timeline2 div[class*="block"][class*="x3"]  {height:750px;}
+
+
+#timeline2 .block      {float:left; overflow:hidden; background-color: grey; border: black 1px solid;}
+#timeline2 .block .imgcontainer  {height:50%; overflow:hidden;}
+#timeline2 .block .imgcontainer img  {width:110%;}
+
+#timeline2 div[class^="block"][class*="x1"] .imgcontainer  {height:100%;}
+
+#timeline2 div[class^="block2x"][class*="x1"] .imgcontainer  {width:50%; float:left; height:100%;}
+#timeline2 div[class^="block2x"][class*="x1"] .commentcontainer  {height:100%; width:50%; float:left;}
+
+#timeline2 .block .commentcontainer  {height:50%; position:relative;}
+#timeline2 div[class*="block2x1"] .commentcontainer ,
+#timeline2 div[class*="block1x2"] .commentcontainer  {background: #365d98;}
+
+#timeline2 div[class*="block2x3"] .imgcontainer  {height:66.6%;}
+#timeline2 div[class*="block2x3"] .commentcontainer  {height: 33.4%;;}
+#timeline2 div[class*="block3x2"] .commentcontainer:before,
+#timeline2 div[class*="block2x3"] .commentcontainer:before  {width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid white; position: absolute; content: ''; top: -20px; left: 40px;}
+
 /*  Feedbacks */
 #timeline .block .commentcontainer .feedbacks   {height:38px; background:#ebeef5; position:absolute; bottom:0px; width:100%;}
 #timeline .block .commentcontainer .feedbacks .date   {font: normal 12px/38px 'Strait',sans-serif; color:#999; margin-left:14px;}
@@ -276,6 +314,10 @@ label {
   opacity: 0.99;
 }
 
+.slide-top-box:active {
+  transition: height 1s ease-in;
+}
+
 #top-box {
   height: 150px;
   width: 100%;
@@ -368,7 +410,33 @@ label {
   position:absolute;
   cursor:pointer;
 }
+#horizontal-scroll {
+  /*min-width: 2000px;*/
+  height: 600px;
+  background-color: grey;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
 
+}
+#wrapper {
+  width: 10000px;
+  height: 600px;
+  background-color: grey;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: absolute;
+  float: left;
+}
+.tweet-item {
+  display: inline-block;
+  float: left;
+  width: 500px;
+  height: 120px;
+  margin: 10px;
+  padding: 5px;
+  background-color: white;
+}
 </style>
 
 <div id="container">
@@ -376,7 +444,7 @@ label {
     <div id="header">
 
       <h1 id="logo">
-        <a href="#"><img src="http://www.erhanbasa.com/uploads/old/fb/facebook-logo.png" /></a>
+        <a href="#"></a>
       </h1>
 
       <ul id="jewel-container">
@@ -466,148 +534,42 @@ label {
 
 
 
-    <div id="timeline">
 
-      <div class="block2x3 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-3.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
+      <div id="horizontal-scroll">
+        <div id="wrapper">
+
         </div>
       </div>
 
-      <div class="block1x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-4.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-            <p>November 24</a></p>
-          </div>
-        </div>
-      </div>
 
-      <div class="block1x2 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Posted on your <a href="#">wall post</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
+      <!-- <div id="timeline2">
+        <div class="block1x1 block">
         </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-5.jpg" />
+        <div class="block1x1 block">
         </div>
-      </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+        <div class="block1x1 block">
+        </div>
+      </div> -->
 
-      <div class="block3x2 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-2.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
-      <div class="block1x1 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-1.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="block1x1 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-4.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">John Smith</strong></a> and <a href="#">42 other people</a>
-            <p>Have commented on your <a href="#">wall post</a></p>
-          </div>
-          <div class="feedbacks">
-            <span class="date">
-              24 Minutes Ago
-            </span>
-            <ul>
-              <li class="like"><a href="#">Like (15)</a></li>
-              <li class="comment"><a href="#">Comment (42)</a></li>
-              <li><a href="#">Share</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="block2x1 block">
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-6.jpg" />
-        </div>
-      </div>
-      <div class="block1x1 block">
-        <div class="imgcontainer">
-          <img src="http://www.erhanbasa.com/uploads/old/fb/dummy-5.jpg" />
-        </div>
-        <div class="commentcontainer">
-          <div class="peoples">
-            <a href="#"><strong class="peoplename">Amelia Ryant</strong></a>
-            <p>Tagged you in a <a href="#">photo</a></p>
-            <p><a>22 min ago</a></p>
-          </div>
-        </div>
-      </div>
-
-      <div id="tweet-box" class="">
-
-      </div>
     </div>
   </div>
 
@@ -691,8 +653,9 @@ var TweetItem = React.createClass({
       <div className="tweet-item" ref="tweetItem">
         <ReactTransitionGroup transitionName="animateList">
           <h6 className="tripAuthor">
-            Tweet
+            {this.props.screenName}
           </h6>
+          <img src={this.props.avatar}></img>
           <a onClick={this.remove} href="#">X</a>
 
           {this.props.children}
@@ -701,10 +664,11 @@ var TweetItem = React.createClass({
     );
   }
 });
+
 var TweetList = React.createClass({
   render: function() {
     var tweetNodes = this.props.data.map(function(item) {
-      return <TweetItem>{item.text}</TweetItem>;
+      return <TweetItem screenName={item.user.screen_name} avatar={item.user.profile_image_url} >{item.text}</TweetItem>;
     });
     return (
       <div className="tweet-list">
@@ -748,7 +712,7 @@ $(document).ready(function() {
 
   //$("#top-box").hide();
   $("#slide-top-box").on("click", function() {
-    $("#top-box").slideDown(1000, "linear");
+    $("#top-box").slideDown("slow", "linear");
   });
   $("#close-top-box").on("click", function() {
     $("#top-box").slideUp("slow");
@@ -780,7 +744,7 @@ $("#search-submit").on("click", function(e) {
   console.log(searchQuery);
   React.renderComponent(
     <TweetManager url="/tweet/search" query={searchQuery} />,
-    document.getElementById('tweet-box')
+    document.getElementById('wrapper')
   );
 });
 

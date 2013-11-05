@@ -50,7 +50,10 @@ module.exports.routes = {
   '/polymer/x-foo': {
     view: 'polymer/x-foo'
   },
-  '/route': function(req, res, next) {
+  '/shape': {
+    view: 'shape/index'
+  },
+  '/sayhi': function(req, res, next) {
     console.log("hi there", req);
   },
   '/auth/twitter': function() {
