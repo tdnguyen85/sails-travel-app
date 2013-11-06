@@ -8,7 +8,9 @@
 
 module.exports = {
 
-   attributes: {
+  schema: true,
+
+  attributes: {
     username: {
       type: 'string',
       required: true

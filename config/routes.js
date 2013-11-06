@@ -59,6 +59,7 @@ module.exports.routes = {
   '/auth/twitter': function() {
     var passport = require('passport');
     var TwitterStrategy = require('passport-twitter').Strategy;
+    console.log("in twitter auth");
 
     passport.use(new TwitterStrategy({
         consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
@@ -79,7 +80,7 @@ module.exports.routes = {
   '/auth/twitter/callback': function() {
     var passport = require('passport');
     var TwitterStrategy = require('passport-twitter').Strategy;
-
+    console.log("in twitter callback");
     passport.use(new TwitterStrategy({
         consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
         consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",

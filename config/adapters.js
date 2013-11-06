@@ -16,7 +16,7 @@ module.exports.adapters = {
 
   // If you leave the adapter config unspecified
   // in a model definition, 'default' will be used.
-  'default': 'disk',
+  'default': 'mongo',
 
   // Persistent adapter for DEVELOPMENT ONLY
   // (data is preserved when the server shuts down)
@@ -43,6 +43,7 @@ module.exports.adapters = {
     port     : 27017,
     user     : '',
     password : '',
-    database : ''
+    database : 'travel-app',
+    schema   : true
   }
 };

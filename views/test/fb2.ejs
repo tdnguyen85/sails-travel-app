@@ -388,8 +388,10 @@ label {
   box-shadow: inset 3px 3px 3px rgba(0,0,0,.2);
   width: 90%;
   height: 60px;
+  position: absolute;
 }
 #status-form   {
+  width: 600px;
   float:left;
   position:relative;
   margin-right: auto;
@@ -420,7 +422,7 @@ label {
 
 }
 #wrapper {
-  width: 10000px;
+  /*width: 10000px;*/
   height: 600px;
   background-color: grey;
   overflow-x: scroll;
@@ -436,6 +438,8 @@ label {
   margin: 10px;
   padding: 5px;
   background-color: white;
+  overflow: hidden;
+  position: relative;
 }
 </style>
 
@@ -649,8 +653,9 @@ var TweetItem = React.createClass({
     this.refs.tweetItem.getDOMNode().remove();
   },
   render: function() {
+
     return(
-      <div className="tweet-item" ref="tweetItem">
+      <div className="tweet-item" ref="tweetItem" style={{backgroundImage: 'url({this.props.banner})', backgroundPosition: "0 0"}}>
         <ReactTransitionGroup transitionName="animateList">
           <h6 className="tripAuthor">
             {this.props.screenName}
@@ -659,6 +664,7 @@ var TweetItem = React.createClass({
           <a onClick={this.remove} href="#">X</a>
 
           {this.props.children}
+          <img src={this.props.banner}></img>
         </ReactTransitionGroup>
       </div>
     );
@@ -668,7 +674,7 @@ var TweetItem = React.createClass({
 var TweetList = React.createClass({
   render: function() {
     var tweetNodes = this.props.data.map(function(item) {
-      return <TweetItem screenName={item.user.screen_name} avatar={item.user.profile_image_url} >{item.text}</TweetItem>;
+      return <TweetItem screenName={item.user.screen_name} avatar={item.user.profile_image_url} banner={item.user.profile_banner_url} >{item.text}</TweetItem>;
     });
     return (
       <div className="tweet-list">
@@ -738,6 +744,7 @@ $("#notification").on('click', function() {
 });
 
 $("#search-submit").on("click", function(e) {
+  $("#wrapper").css('width', 10000);
   e.preventDefault();
   console.log("clicked tweet");
   var searchQuery = $("#search-twitter").val();
@@ -746,6 +753,13 @@ $("#search-submit").on("click", function(e) {
     <TweetManager url="/tweet/search" query={searchQuery} />,
     document.getElementById('wrapper')
   );
+});
+
+$(window).scroll(function() {
+  console.log("3-");
+  if ( $(window).scrollLeft() > 1000) {
+    console.log('4-');
+  }
 });
 
 

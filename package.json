@@ -11,7 +11,8 @@
     "optimist": "0.3.4",
     "passport": "~0.1.17",
     "passport-twitter": "*",
-    "twit": "*"
+    "twit": "*",
+    "sails-mongo": "~0.9.5"
   },
   "scripts": {
     "start": "node app.js",
@@ -22,6 +23,7 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "grunt-contrib-handlebars": "~0.5.11"
+    "grunt-contrib-handlebars": "~0.5.11",
+    "grunt-contrib-watch": "~0.5.3"
   }
 }

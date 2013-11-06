@@ -117,6 +117,7 @@ module.exports = {
           return console.log(err);
         } else {
           console.log("Trip created:", trip);
+          res.json(trip);
         }
       });
     });
