@@ -440,6 +440,7 @@ label {
   background-color: white;
   overflow: hidden;
   position: relative;
+  background-position: 0 0;
 }
 </style>
 
@@ -655,7 +656,8 @@ var TweetItem = React.createClass({
   render: function() {
 
     return(
-      <div className="tweet-item" ref="tweetItem" style={{backgroundImage: 'url({this.props.banner})', backgroundPosition: "0 0"}}>
+      <div className="tweet-item" ref="tweetItem" style={{background: 'white url(' + this.props.banner + ') no-repeat center'}}>
+        <div>
         <ReactTransitionGroup transitionName="animateList">
           <h6 className="tripAuthor">
             {this.props.screenName}
@@ -664,8 +666,9 @@ var TweetItem = React.createClass({
           <a onClick={this.remove} href="#">X</a>
 
           {this.props.children}
-          <img src={this.props.banner}></img>
+
         </ReactTransitionGroup>
+        </div>
       </div>
     );
   }
