@@ -15,20 +15,19 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-module.exports = {
+var Twit = require('twit');
+var T = new Twit({
+  consumer_key: 'iDlLR56w66Zmi6TkCPEcJg',
+  consumer_secret: 'oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4',
+  access_token: '64147911-j7lDjWdIJRLasrvaJxdjWoOAh4mj84fcfp0YwF8WX',
+  access_token_secret: 'dtTo64OVoF1raYj3S6JAwB4UYmhQ2x9yZeF3y3BFxHKo8'
+});
 
+module.exports = {
 
   search: function(req, res) {
 
     console.log('hi');
-    var Twit = require('twit');
-
-    var T = new Twit({
-      consumer_key: 'iDlLR56w66Zmi6TkCPEcJg',
-      consumer_secret: 'oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4',
-      access_token: '64147911-j7lDjWdIJRLasrvaJxdjWoOAh4mj84fcfp0YwF8WX',
-      access_token_secret: 'dtTo64OVoF1raYj3S6JAwB4UYmhQ2x9yZeF3y3BFxHKo8'
-    });
 
     T.get('search/tweets', { q: req.query.q, count: 100 }, function(err, reply) {
       if (err) {
@@ -38,20 +37,10 @@ module.exports = {
         res.send(reply);
       }
     });
-
-
   },
   homeTimeline: function(req, res) {
-    var Twit = require('twit');
 
-    var T = new Twit({
-      consumer_key: 'iDlLR56w66Zmi6TkCPEcJg',
-      consumer_secret: 'oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4',
-      access_token: '64147911-j7lDjWdIJRLasrvaJxdjWoOAh4mj84fcfp0YwF8WX',
-      access_token_secret: 'dtTo64OVoF1raYj3S6JAwB4UYmhQ2x9yZeF3y3BFxHKo8'
-    });
-
-    T.get('statuses/home_timeline', { count: 200 } , function(err, reply) {
+    T.get('statuses/home_timeline', { count: 100 } , function(err, reply) {
       if (err) {
         return console.log(err);
       } else {

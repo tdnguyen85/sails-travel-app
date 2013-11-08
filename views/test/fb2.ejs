@@ -110,43 +110,44 @@ body  {
 #timeline div[class*="block2x3"] .commentcontainer:before  {width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid white; position: absolute; content: ''; top: -20px; left: 40px;}
 
 /*  Timeline2 12 columns layout */
-#timeline2 div[class*="block1x"] {width:8.33%;}
-#timeline2 div[class*="block2x"] {width:16.66%;}
-#timeline2 div[class*="block3x"] {width:25.0%;}
-#timeline2 div[class*="block4x"] {width:33.32%;}
-#timeline2 div[class*="block5x"] {width:42.846%;}
-#timeline2 div[class*="block6x"] {width:50.0%;}
-#timeline2 div[class*="block7x"] {width:58.33%;}
-#timeline2 div[class*="block8x"] {width:66.66%;}
-#timeline2 div[class*="block9x"] {width:75.0%;}
-#timeline2 div[class*="block10x"] {width:83.32%;}
-#timeline2 div[class*="block11x"] {width:92.846%;}
-#timeline2 div[class*="block12x"] {width:100.0%;}
+#wrapper div[class*="block1x"] {width:8.33%;}
+#wrapper div[class*="block2x"] {width:16.66%;}
+#wrapper div[class*="block3x"] {width:25.0%;}
+#wrapper div[class*="block4x"] {width:33.32%;}
+#wrapper div[class*="block5x"] {width:42.846%;}
+#wrapper div[class*="block6x"] {width:50.0%;}
+#wrapper div[class*="block7x"] {width:58.33%;}
+#wrapper div[class*="block8x"] {width:66.66%;}
+#wrapper div[class*="block9x"] {width:75.0%;}
+#wrapper div[class*="block10x"] {width:83.32%;}
+#wrapper div[class*="block11x"] {width:92.846%;}
+#wrapper div[class*="block12x"] {width:100.0%;}
+
+#wrapper div[class*="block"][class*="x0"]  {height: auto;}
+#wrapper div[class*="block"][class*="x1"]  {height:250px;}
+#wrapper div[class*="block"][class*="x2"]  {height:500px;}
+#wrapper div[class*="block"][class*="x3"]  {height:750px;}
 
 
-#timeline2 div[class*="block"][class*="x1"]  {height:250px;}
-#timeline2 div[class*="block"][class*="x2"]  {height:500px;}
-#timeline2 div[class*="block"][class*="x3"]  {height:750px;}
+#wrapper .block      {float:left; overflow:hidden; background-color: rgba(255,255,255,0.6);}
+#wrapper .block .imgcontainer  {height:50%; overflow:hidden;}
+#wrapper .block .imgcontainer img  {width:110%;}
 
+#wrapper div[class^="block"][class*="x1"] .imgcontainer  {height:100%;}
 
-#timeline2 .block      {float:left; overflow:hidden; background-color: grey; border: black 1px solid;}
-#timeline2 .block .imgcontainer  {height:50%; overflow:hidden;}
-#timeline2 .block .imgcontainer img  {width:110%;}
+#wrapper div[class^="block2x"][class*="x1"] .imgcontainer  {width:50%; float:left; height:100%;}
+#wrapper div[class^="block2x"][class*="x1"] .commentcontainer  {height:100%; width:50%; float:left;}
 
-#timeline2 div[class^="block"][class*="x1"] .imgcontainer  {height:100%;}
+#wrapper .block .commentcontainer  {height:50%; position:relative;}
+#wrapper div[class*="block2x1"] .commentcontainer ,
+#wrapper div[class*="block1x2"] .commentcontainer  {background: #365d98;}
 
-#timeline2 div[class^="block2x"][class*="x1"] .imgcontainer  {width:50%; float:left; height:100%;}
-#timeline2 div[class^="block2x"][class*="x1"] .commentcontainer  {height:100%; width:50%; float:left;}
+#wrapper div[class*="block2x3"] .imgcontainer  {height:66.6%;}
+#wrapper div[class*="block2x3"] .commentcontainer  {height: 33.4%;;}
+#wrapper div[class*="block3x2"] .commentcontainer:before,
+#wrapper div[class*="block2x3"] .commentcontainer:before  {width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid white; position: absolute; content: ''; top: -20px; left: 40px;}
 
-#timeline2 .block .commentcontainer  {height:50%; position:relative;}
-#timeline2 div[class*="block2x1"] .commentcontainer ,
-#timeline2 div[class*="block1x2"] .commentcontainer  {background: #365d98;}
-
-#timeline2 div[class*="block2x3"] .imgcontainer  {height:66.6%;}
-#timeline2 div[class*="block2x3"] .commentcontainer  {height: 33.4%;;}
-#timeline2 div[class*="block3x2"] .commentcontainer:before,
-#timeline2 div[class*="block2x3"] .commentcontainer:before  {width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid white; position: absolute; content: ''; top: -20px; left: 40px;}
-
+#wrapper div img { width: 50%; height: 50%;}
 /*  Feedbacks */
 #timeline .block .commentcontainer .feedbacks   {height:38px; background:#ebeef5; position:absolute; bottom:0px; width:100%;}
 #timeline .block .commentcontainer .feedbacks .date   {font: normal 12px/38px 'Strait',sans-serif; color:#999; margin-left:14px;}
@@ -430,7 +431,7 @@ label {
 }
 #wrapper {
   /*width: 10000px;*/
-  height: 100%;
+  height: 700px;
   overflow-x: scroll;
   overflow-y: hidden;
   position: absolute;
@@ -474,7 +475,7 @@ section {
   height: 400px;
   position: fixed;
   z-index: 1000000;
-  background: RGBA(33,33,33,.8);
+  background: rgba(33,33,33,.8);
   top: 100px;
   left: 20px;
   border-radius: 3px;
@@ -728,20 +729,20 @@ var TweetItem = React.createClass({
   render: function() {
 
     return(
+      <ReactTransitionGroup transitionName="animateList">
       <div className="tweet-item" ref="tweetItem" style={{background: 'white url(' + this.props.banner + ') no-repeat center'}}>
-        <div>
-        <ReactTransitionGroup transitionName="animateList">
+        <div className="block2x0 block">
+          <img src={this.props.avatar}></img>
+        </div>
+        <div className="block10x0 block">
           <h6 className="tripAuthor">
             <a href="#" onClick={this.handleClick}>{this.props.screenName}</a>
           </h6>
-          <img src={this.props.avatar}></img>
-          <a onClick={this.remove} href="#">X</a>
-
           {this.props.children}
-
-        </ReactTransitionGroup>
         </div>
+        <a onClick={this.remove} href="#">X</a>
       </div>
+      </ReactTransitionGroup>
     );
   }
 });
@@ -840,7 +841,7 @@ $(window).scroll(function() {
 $("#trigger-modal").on("click", function() {
   $("#custom-modal").removeClass('hidden');
 
-  $(".modal-close").on("click", function() {
+  $("#custom-modal").on("click", function() {
     $("#custom-modal").addClass('hidden');
   })
 });
