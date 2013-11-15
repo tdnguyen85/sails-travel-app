@@ -1,0 +1,61 @@
+<style>
+.left {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+
+}
+.middle {
+  width: 30%;
+}
+.right {
+  width: 50%;
+}
+</style>
+
+
+<div class="container">
+
+  <div class="left">
+  </div>
+
+  <div class="middle">
+  </div>
+
+  <div class="right">
+  </div>
+
+</div>
+
+<script>
+// Lato, sans serif
+$(document).ready(function() {
+  var scrollPosition = 10000;
+  var buffer = null;
+  $(window).on("scroll", function(e){
+    if ( !_buffer ) {
+
+         _buffer = setTimeout(function () {
+
+            infiScroll(e);
+
+            _buffer = null;
+
+         }, 300);
+      }
+
+  });
+
+  function infiScroll() {
+    console.log('314526786');
+    if( -($("#wrapper").position().left) > (scrollPosition - 1500)) {
+      scrollPosition += 2000
+      $("#wrapper").css("width", scrollPosition);
+      console.log("in scroll");
+    }
+  }
+
+
+});
+
+</script>

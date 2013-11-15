@@ -44,6 +44,9 @@ module.exports.routes = {
   '/fb2': {
     view: 'test/fb2'
   },
+  '/medium': {
+    view: 'test/medium'
+  },
   '/polymer': {
     view: 'polymer/poly'
   },
