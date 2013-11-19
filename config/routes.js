@@ -25,6 +25,61 @@
  * For convenience, you can also connect routes directly to views or external URLs.
  *
  */
+var passport = require('passport');
+    var TwitterStrategy = require('passport-twitter').Strategy;
+    console.log("in twitter auth");
+
+    passport.use(new TwitterStrategy({
+        consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
+        consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
+        userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
+        callbackURL: "/auth/twitter/callback"
+      },
+      function(token, tokenSecret, profile, done) {
+        console.log("logged in with twitter");
+        User.findOrCreate({name: req.params('name')}, function(err, user) {
+          if (err) { return done(err); }
+          done(null, user);
+        });
+      }
+    ));
+
+// passport.initialize();
+// passport.session();
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+// var OAuth = require('OAuth');
+// var oauth = new OAuth.OAuth(
+//   'https://api.twitter.com/oauth/request_token',
+//   'https://api.twitter.com/oauth/access_token',
+//   'iDlLR56w66Zmi6TkCPEcJg',
+//   'oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4',
+//   '1.0A',
+//   null,
+//   'HMAC-SHA1'
+// );
+// oauth.get(
+//   'https://api.twitter.com/1.1/trends/place.json?id=23424977',
+//   'your user token for this app',
+//   //you can get it at dev.twitter.com for your own apps
+//   'your user secret for this app',
+//   //you can get it at dev.twitter.com for your own apps
+//   function (e, data, res){
+//     if (e) console.error(e);
+//     console.log(require('util').inspect(data));
+//     done();
+//   }
+// );
+
 
 module.exports.routes = {
 
@@ -60,45 +115,29 @@ module.exports.routes = {
     console.log("hi there", req);
   },
   '/auth/twitter': function() {
-    var passport = require('passport');
-    var TwitterStrategy = require('passport-twitter').Strategy;
-    console.log("in twitter auth");
-
-    passport.use(new TwitterStrategy({
-        consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
-        consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
-        callbackURL: "/auth/twitter/callback"
-      },
-      function(token, tokenSecret, profile, done) {
-        console.log("logged in with twitter");
-        User.findOrCreate({name: req.params('name')}, function(err, user) {
-          if (err) { return done(err); }
-          done(null, user);
-        });
-      }
-    ));
-
-    passport.authenticate('twitter');
+    console.log(passport);
+    passport.authorize('twitter');
   },
   '/auth/twitter/callback': function() {
-    var passport = require('passport');
-    var TwitterStrategy = require('passport-twitter').Strategy;
-    console.log("in twitter callback");
-    passport.use(new TwitterStrategy({
-        consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
-        consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
-        callbackURL: "/auth/twitter/callback"
-      },
-      function(token, tokenSecret, profile, done) {
-        // User.findOrCreate({name: req.params('name')}, function(err, user) {
-        //   if (err) { return done(err); }
-        //   done(null, user);
-        // });
-        console.log(profile);
-        done(null, profile);
-      }
-    ));
-    passport.authenticate('twitter', { successRedirect: '/fb2', failureRedirect: '/' });
+    // var passport = require('passport');
+    // var TwitterStrategy = require('passport-twitter').Strategy;
+    // console.log("in twitter callback");
+    // passport.use(new TwitterStrategy({
+    //     consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
+    //     consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
+    //     callbackURL: "/auth/twitter/callback"
+    //   },
+    //   function(token, tokenSecret, profile, done) {
+    //     // User.findOrCreate({name: req.params('name')}, function(err, user) {
+    //     //   if (err) { return done(err); }
+    //     //   done(null, user);
+    //     // });
+    //     console.log(profile);
+    //     done(null, profile);
+    //   }
+    // ));
+    console.log('in callback');
+    passport.authorize('twitter', { successRedirect: '/fb2', failureRedirect: '/' });
   }
 
 };

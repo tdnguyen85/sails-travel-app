@@ -27,8 +27,6 @@ module.exports = {
 
   search: function(req, res) {
 
-    console.log('hi');
-
     T.get('search/tweets', { q: req.query.q, count: 100 }, function(err, reply) {
       if (err) {
         return console.log(err);

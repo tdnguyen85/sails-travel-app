@@ -1,15 +1,28 @@
 <style>
+.body {
+  font-family: Lato, sans-serif;
+  padding: 0;
+  margin: 0;
+}
 .left {
   width: 20%;
+  min-width: 100px;
   height: 100%;
   position: fixed;
-
+  padding: 0;
+  margin: 0;
 }
 .middle {
   width: 30%;
+  min-width: 150px;
+  padding: 0;
+  margin: 0;
 }
 .right {
   width: 50%;
+  min-width: 250px;
+  padding: 0;
+  margin: 0;
 }
 </style>
 
@@ -28,7 +41,89 @@
 </div>
 
 <script>
-// Lato, sans serif
+
+/**
+ * @jsx React.DOM
+ */
+var TweetItem = React.createClass({
+  remove: function(e) {
+    e.preventDefault();
+    console.log(this.refs.tweetItem.getDOMNode());
+    this.refs.tweetItem.getDOMNode().remove();
+  },
+  expand: function(e) {
+    e.preventDefault();
+    $(this.refs.tweetItem.getDOMNode()).addClass("expand-tweet");
+  },
+  handleClick: function(e) {
+    e.preventDefault();
+
+    $("#target-img").attr("src", this.props.banner);
+  },
+  render: function() {
+
+    return(
+      <ReactTransitionGroup transitionName="animateList">
+      <div className="tweet-item" ref="tweetItem" style={{background: 'white url(' + this.props.banner + ') no-repeat center'}}>
+        <div className="block2x0 block">
+          <img src={this.props.avatar}></img>
+        </div>
+        <div className="block10x0 block">
+          <h6 className="tripAuthor">
+            <a href="#" onClick={this.handleClick}>{this.props.screenName}</a>
+          </h6>
+          {this.props.children}
+        </div>
+        <a onClick={this.remove} href="#">X</a>
+        <a onClick={this.expand} href="#">O</a>
+      </div>
+      </ReactTransitionGroup>
+    );
+  }
+});
+
+var TweetList = React.createClass({
+  render: function() {
+    var tweetNodes = this.props.data.map(function(item) {
+      return <TweetItem screenName={item.user.screen_name} avatar={item.user.profile_image_url} banner={item.user.profile_banner_url} >{item.text}</TweetItem>;
+    });
+    return (
+      <div className="tweet-list">
+          {tweetNodes}
+      </div>
+    );
+  }
+});
+var TweetManager = React.createClass({
+  loadTweetsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      data: {q: this.props.query},
+      dataType: 'json',
+      mimeType: 'textPlain',
+      success: function(data) {
+        console.log(data);
+        this.setState({data: data.statuses || data});
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentWillMount: function() {
+    this.loadTweetsFromServer();
+  },
+  render: function() {
+    return(
+      <div className="tweet-manager">
+
+        <TweetList data={this.state.data} />
+
+      </div>
+    );
+  }
+});
+
 $(document).ready(function() {
   var scrollPosition = 10000;
   var buffer = null;
