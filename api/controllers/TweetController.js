@@ -57,7 +57,7 @@ module.exports = {
     });
   },
   stream: function(req, res) {
-    var stream = T.stream('statuses/sample', {filter_level: "medium"});
+    var stream = T.stream('user', {filter_level: "medium"});
     stream.on('connect', function (request) {
       console.log("Connected to twitter stream", request);
     });

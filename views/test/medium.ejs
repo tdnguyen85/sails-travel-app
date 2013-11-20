@@ -185,7 +185,7 @@ var StreamTweet = React.createClass({
       <ReactTransitionGroup transitionName="animateList">
       <div className="tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.data.user.profile_banner_url + ') no-repeat center'}}>
         <div className="block2x0 block">
-          <img src={this.props.data.user.avatar}></img>
+          <img src={this.props.data.user.profile_image_url}></img>
         </div>
         <div className="block10x0 block">
           <h6 className="screen-name">
@@ -196,6 +196,38 @@ var StreamTweet = React.createClass({
         <hr></hr>
       </div>
       </ReactTransitionGroup>
+    );
+  }
+});
+
+var StreamTweetList = React.createClass({
+  socketListen: function() {
+    socket.get('/tweet/stream', function(response) {
+      console.log(response);
+      tweetCount = 1;
+
+      socket.on('tweet', function(tweet){
+        var newDiv = document.createElement('div');
+        newDiv.id = "tweet" + tweetCount;
+        alltweets.insertBefore(newDiv);
+        console.log(tweet);
+        React.renderComponent(
+          <StreamTweet data={tweet} />,
+          document.getElementById(newDiv.id)
+        );
+        tweetCount+=1;
+      });
+    });
+  },
+  getInitialState: function() {
+    // use ajax to get tweets
+  },
+  componentWillMount: function() {
+    this.socketListen();
+  },
+  render: function() {
+    return(
+      <StreamTweet />
     );
   }
 });
@@ -231,24 +263,30 @@ $(document).ready(function() {
   //   document.getElementById('alltweets')
   // );
 
-  // $.get('/tweet/stream', function(data) {
-  //   console.log(data);
-  // });
-  // socket.on('tweet', function(tweet){
-  //   console.log(tweet);
-  // });
+  // React.renderComponent(
+  //   <StreamTweetList />,
+  //   document.getElementById('alltweets')
+  // );
 
   socket.get('/tweet/stream', function(response) {
     console.log(response);
+    tweetCount = 1;
 
     socket.on('tweet', function(tweet){
+      var newDiv = document.createElement('div');
+      var wrapperDiv = document.getElementById('alltweets');
+      newDiv.id = "tweet" + tweetCount;
+      wrapperDiv.insertBefore(newDiv, wrapperDiv.firstChild);
       console.log(tweet);
       React.renderComponent(
         <StreamTweet data={tweet} />,
-        document.getElementById('alltweets')
+        document.getElementById(newDiv.id)
       );
+      tweetCount+=1;
     });
+
   });
+
 
 });
 
