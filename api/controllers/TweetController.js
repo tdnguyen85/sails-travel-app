@@ -26,7 +26,6 @@ var T = new Twit({
 module.exports = {
 
   search: function(req, res) {
-
     T.get('search/tweets', { q: req.query.q, count: 100 }, function(err, reply) {
       if (err) {
         return console.log(err);
@@ -37,7 +36,6 @@ module.exports = {
     });
   },
   homeTimeline: function(req, res) {
-
     T.get('statuses/home_timeline', { count: 100 } , function(err, reply) {
       if (err) {
         return console.log(err);
@@ -46,8 +44,33 @@ module.exports = {
         res.send(reply);
       }
     });
-  },
 
+  },
+  rateLimitStatus: function(req, res) {
+    T.get('application/rate_limit_status', function(err, reply) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.log(reply);
+        res.send(reply);
+      }
+    });
+  },
+  stream: function(req, res) {
+    var stream = T.stream('statuses/sample', {filter_level: "medium"});
+    stream.on('connect', function (request) {
+      console.log("Connected to twitter stream", request);
+    });
+    stream.on('disconnect', function (request) {
+      console.log("Disconnected from twitter stream", request);
+    });
+    stream.on('tweet', function(tweet) {
+      console.log('tweet');
+      //res.send(tweet);
+      req.socket.emit('tweet', tweet);
+    });
+    res.send({text: "in stream"});
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`

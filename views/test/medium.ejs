@@ -1,28 +1,65 @@
 <style>
-.body {
+body {
   font-family: Lato, sans-serif;
   padding: 0;
   margin: 0;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
 }
 .left {
   width: 20%;
   min-width: 100px;
   height: 100%;
+  background-color: rgba(29,41,57, 1.0);
   position: fixed;
   padding: 0;
   margin: 0;
+  position: relative;
+  float: left;
 }
 .middle {
   width: 30%;
   min-width: 150px;
+  height: 100%;
+  background-color: rgba(28,175,154, 1.0);
   padding: 0;
   margin: 0;
+  overflow: scroll;
+  position: relative;
+  float: left;
 }
 .right {
   width: 50%;
   min-width: 250px;
+  height: 100%;
+  background-color: rgba(255,255,255, 1.0);
   padding: 0;
   margin: 0;
+  overflow: scroll;
+  position: relative;
+  float: left;
+}
+.tweet-item {
+  width: 90%;
+  margin: auto;
+}
+a {
+  color: rgba(209,220,72, 1.0) !important;
+}
+/* animation for React.js components */
+.animateList-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.animateList-enter.animateList-enter-active {
+  opacity: 0.99;
 }
 </style>
 
@@ -33,18 +70,24 @@
   </div>
 
   <div class="middle">
+    <h1>Hello World</h1>
+    <div id="alltweets"></div>
   </div>
 
   <div class="right">
+    <div id="user-tweets"></div>
   </div>
 
 </div>
 
-<script>
+<script type="text/jsx">
 
 /**
  * @jsx React.DOM
  */
+
+var ReactTransitionGroup = React.addons.TransitionGroup;
+
 var TweetItem = React.createClass({
   remove: function(e) {
     e.preventDefault();
@@ -64,12 +107,12 @@ var TweetItem = React.createClass({
 
     return(
       <ReactTransitionGroup transitionName="animateList">
-      <div className="tweet-item" ref="tweetItem" style={{background: 'white url(' + this.props.banner + ') no-repeat center'}}>
+      <div className="tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.banner + ') no-repeat center'}}>
         <div className="block2x0 block">
           <img src={this.props.avatar}></img>
         </div>
         <div className="block10x0 block">
-          <h6 className="tripAuthor">
+          <h6 className="screen-name">
             <a href="#" onClick={this.handleClick}>{this.props.screenName}</a>
           </h6>
           {this.props.children}
@@ -77,9 +120,17 @@ var TweetItem = React.createClass({
         <a onClick={this.remove} href="#">X</a>
         <a onClick={this.expand} href="#">O</a>
       </div>
+      <hr></hr>
       </ReactTransitionGroup>
     );
   }
+});
+
+var UserTweets = React.createClass({
+  render: function() {
+
+  }
+
 });
 
 var TweetList = React.createClass({
@@ -110,9 +161,13 @@ var TweetManager = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  componentWillMount: function() {
-    this.loadTweetsFromServer();
-  },
+  // componentWillMount: function() {
+  //   this.loadTweetsFromServer();
+  //   setInterval(
+  //     this.loadTweetsFromServer.bind(this),
+  //     this.props.pollInterval
+  //   );
+  // },
   render: function() {
     return(
       <div className="tweet-manager">
@@ -124,32 +179,76 @@ var TweetManager = React.createClass({
   }
 });
 
-$(document).ready(function() {
-  var scrollPosition = 10000;
-  var buffer = null;
-  $(window).on("scroll", function(e){
-    if ( !_buffer ) {
-
-         _buffer = setTimeout(function () {
-
-            infiScroll(e);
-
-            _buffer = null;
-
-         }, 300);
-      }
-
-  });
-
-  function infiScroll() {
-    console.log('314526786');
-    if( -($("#wrapper").position().left) > (scrollPosition - 1500)) {
-      scrollPosition += 2000
-      $("#wrapper").css("width", scrollPosition);
-      console.log("in scroll");
-    }
+var StreamTweet = React.createClass({
+  render: function() {
+    return(
+      <ReactTransitionGroup transitionName="animateList">
+      <div className="tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.data.user.profile_banner_url + ') no-repeat center'}}>
+        <div className="block2x0 block">
+          <img src={this.props.data.user.avatar}></img>
+        </div>
+        <div className="block10x0 block">
+          <h6 className="screen-name">
+            <a href="#" onClick={this.handleClick}>{this.props.data.user.screen_name}</a>
+          </h6>
+          {this.props.data.text}
+        </div>
+        <hr></hr>
+      </div>
+      </ReactTransitionGroup>
+    );
   }
+});
 
+$(document).ready(function() {
+  // var scrollPosition = 10000;
+  // var buffer = null;
+  // $(window).on("scroll", function(e){
+  //   if ( !_buffer ) {
+
+  //        _buffer = setTimeout(function () {
+
+  //           infiScroll(e);s
+  //           _buffer = null;
+
+  //        }, 300);
+  //     }
+
+  // });
+
+  // function infiScroll() {
+  //   console.log('314526786');
+  //   if( -($("#wrapper").position().left) > (scrollPosition - 1500)) {
+  //     scrollPosition += 2000
+  //     $("#wrapper").css("width", scrollPosition);
+  //     console.log("in scroll");
+  //   }
+  // }
+
+  // var searchQuery = "doge";
+  // React.renderComponent(
+  //   <TweetManager url="/tweet/stream" query={searchQuery} pollInterval={10000} />,
+  //   document.getElementById('alltweets')
+  // );
+
+  // $.get('/tweet/stream', function(data) {
+  //   console.log(data);
+  // });
+  // socket.on('tweet', function(tweet){
+  //   console.log(tweet);
+  // });
+
+  socket.get('/tweet/stream', function(response) {
+    console.log(response);
+
+    socket.on('tweet', function(tweet){
+      console.log(tweet);
+      React.renderComponent(
+        <StreamTweet data={tweet} />,
+        document.getElementById('alltweets')
+      );
+    });
+  });
 
 });
 

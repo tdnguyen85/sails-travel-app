@@ -74,6 +74,21 @@
         }
       });
 
+      var TripList = React.createClass({
+        render: function() {
+          var tripNodes = this.props.data.map(function(trip) {
+            return <Trip author={trip.name}>{trip.name}</Trip>;
+          });
+          return (
+            <div className="tripList">
+              <ReactTransitionGroup transitionName="example">
+              {tripNodes}
+              </ReactTransitionGroup>
+            </div>
+          );
+        }
+      });
+
       var TripBox = React.createClass({
         loadTripsFromServer: function() {
           $.ajax({
@@ -123,20 +138,6 @@
         }
       });
 
-      var TripList = React.createClass({
-        render: function() {
-          var tripNodes = this.props.data.map(function(trip) {
-            return <Trip author={trip.name}>{trip.name}</Trip>;
-          });
-          return (
-            <div className="tripList">
-              <ReactTransitionGroup transitionName="example">
-              {tripNodes}
-              </ReactTransitionGroup>
-            </div>
-          );
-        }
-      });
 
       var TripForm = React.createClass({
         handleSubmit: function() {
