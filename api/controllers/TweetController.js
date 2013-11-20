@@ -46,6 +46,16 @@ module.exports = {
     });
 
   },
+  viewFollowedTweets: function(req, res) {
+    T.get('statuses/user_timeline', { screen_name: req.query.q, count: 100 } , function(err, reply) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.log("Success tweeting", reply);
+        res.send(reply);
+      }
+    });
+  },
   rateLimitStatus: function(req, res) {
     T.get('application/rate_limit_status', function(err, reply) {
       if (err) {

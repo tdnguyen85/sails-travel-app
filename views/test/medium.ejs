@@ -126,13 +126,6 @@ var TweetItem = React.createClass({
   }
 });
 
-var UserTweets = React.createClass({
-  render: function() {
-
-  }
-
-});
-
 var TweetList = React.createClass({
   render: function() {
     var tweetNodes = this.props.data.map(function(item) {
@@ -161,13 +154,13 @@ var TweetManager = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  // componentWillMount: function() {
-  //   this.loadTweetsFromServer();
-  //   setInterval(
-  //     this.loadTweetsFromServer.bind(this),
-  //     this.props.pollInterval
-  //   );
-  // },
+  componentWillMount: function() {
+    this.loadTweetsFromServer();
+    // setInterval(
+    //   this.loadTweetsFromServer.bind(this),
+    //   this.props.pollInterval
+    // );
+  },
   render: function() {
     return(
       <div className="tweet-manager">
@@ -180,6 +173,13 @@ var TweetManager = React.createClass({
 });
 
 var StreamTweet = React.createClass({
+  handleClick: function(e) {
+    e.preventDefault();
+    React.renderComponent(
+      <TweetManager url="/tweet/viewFollowedTweets" query={this.props.data.user.screen_name} />,
+      document.getElementById('user-tweets')
+    );
+  },
   render: function() {
     return(
       <ReactTransitionGroup transitionName="animateList">
@@ -200,37 +200,7 @@ var StreamTweet = React.createClass({
   }
 });
 
-var StreamTweetList = React.createClass({
-  socketListen: function() {
-    socket.get('/tweet/stream', function(response) {
-      console.log(response);
-      tweetCount = 1;
 
-      socket.on('tweet', function(tweet){
-        var newDiv = document.createElement('div');
-        newDiv.id = "tweet" + tweetCount;
-        alltweets.insertBefore(newDiv);
-        console.log(tweet);
-        React.renderComponent(
-          <StreamTweet data={tweet} />,
-          document.getElementById(newDiv.id)
-        );
-        tweetCount+=1;
-      });
-    });
-  },
-  getInitialState: function() {
-    // use ajax to get tweets
-  },
-  componentWillMount: function() {
-    this.socketListen();
-  },
-  render: function() {
-    return(
-      <StreamTweet />
-    );
-  }
-});
 
 $(document).ready(function() {
   // var scrollPosition = 10000;
