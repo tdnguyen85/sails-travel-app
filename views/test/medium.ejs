@@ -87,6 +87,13 @@ a {
 .animateList-enter.animateList-enter-active {
   opacity: 0.99;
 }
+.animateList-leave {
+  opacity: 0.99;
+  transition: opacity .5s ease-in;
+}
+.animateList-leave.animateList-leave-active {
+  opacity: 0.01;
+}
 </style>
 
 
@@ -216,7 +223,7 @@ var StreamTweet = React.createClass({
         <div className="tweet-header block2x0 block">
           <img src={this.props.data.user.profile_image_url}></img>
           <h6 className="screen-name">
-            <a href="#" onClick={this.handleClick}>{this.props.data.user.screen_name}</a>
+            <a href="#" onClick={this.handleClick}>{'@'}{this.props.data.user.screen_name}</a>
           </h6>
         </div>
         <div className="tweet-body">
@@ -256,16 +263,6 @@ $(document).ready(function() {
   //   }
   // }
 
-  // var searchQuery = "doge";
-  // React.renderComponent(
-  //   <TweetManager url="/tweet/stream" query={searchQuery} pollInterval={10000} />,
-  //   document.getElementById('alltweets')
-  // );
-
-  // React.renderComponent(
-  //   <StreamTweetList />,
-  //   document.getElementById('alltweets')
-  // );
 
   socket.get('/tweet/stream', function(response) {
     console.log(response);
@@ -283,7 +280,6 @@ $(document).ready(function() {
       );
       tweetCount+=1;
     });
-
   });
 
 

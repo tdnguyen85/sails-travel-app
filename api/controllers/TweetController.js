@@ -44,7 +44,6 @@ module.exports = {
         res.send(reply);
       }
     });
-
   },
   viewFollowedTweets: function(req, res) {
     T.get('statuses/user_timeline', { screen_name: req.query.q, count: 100 } , function(err, reply) {
