@@ -54,7 +54,7 @@ h6 {
   background: rgba(238,79,75, 1.0);
 }
 .tweet-header {
-
+  display: inline-block;
   /*padding: 5px;*/
   /*background-color: rgba(255,255,255, 0.8);*/
 }
@@ -66,6 +66,9 @@ h6 {
 .tweet-text {
   font-size: 12px;
   color: white;
+}
+.tweet-avatar {
+  display: inline-block;
 }
 .screen-name {
   margin: 5px;
@@ -215,21 +218,33 @@ var StreamTweet = React.createClass({
       <TweetManager url="/tweet/viewFollowedTweets" query={this.props.data.user.screen_name} />,
       document.getElementById('user-tweets')
     );
+    this.getWindowPosition();
+  },
+  getWindowPosition: function() {
+    console.log($(this.refs.tweetItem.getDOMNode()).position());
+  },
+  formatTime: function() {
+    createdAt = new Date(this.props.data.created_at);
+    currentTime = new Date();
+    timeMarker = currentTime - createdAt;
+    return timeMarker;
   },
   render: function() {
     return(
       <ReactTransitionGroup transitionName="animateList">
       <div className="tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.data.user.profile_banner_url + ') no-repeat center'}}>
-        <div className="tweet-header block2x0 block">
+        <div className="tweet-avatar">
           <img src={this.props.data.user.profile_image_url}></img>
+        </div>
+        <div className="tweet-header block2x0 block">
           <h6 className="screen-name">
             <a href="#" onClick={this.handleClick}>{'@'}{this.props.data.user.screen_name}</a>
           </h6>
+          <span>{this.formatTime()}</span>
         </div>
         <div className="tweet-body">
           <span className="tweet-text">{this.props.data.text}</span>
         </div>
-
       </div>
       </ReactTransitionGroup>
     );
