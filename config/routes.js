@@ -26,23 +26,23 @@
  *
  */
 var passport = require('passport');
-    var TwitterStrategy = require('passport-twitter').Strategy;
-    console.log("in twitter auth");
+var TwitterStrategy = require('passport-twitter').Strategy;
+console.log("in twitter auth");
 
-    passport.use(new TwitterStrategy({
-        consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
-        consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
-        userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
-        callbackURL: "/auth/twitter/callback"
-      },
-      function(token, tokenSecret, profile, done) {
-        console.log("logged in with twitter");
-        User.findOrCreate({name: req.params('name')}, function(err, user) {
-          if (err) { return done(err); }
-          done(null, user);
-        });
-      }
-    ));
+passport.use(new TwitterStrategy({
+    consumerKey: "iDlLR56w66Zmi6TkCPEcJg",
+    consumerSecret: "oPi0y1kLd26PC2FXjIEwv7HgTQtQ5TxRnUBof3YjL4",
+    userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
+    callbackURL: "/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    console.log("logged in with twitter");
+    User.findOrCreate({name: req.params('name')}, function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
 
 // passport.initialize();
 // passport.session();
@@ -90,17 +90,20 @@ module.exports.routes = {
   '/': {
     view: 'home/index'
   },
-  '/test': {
-    view: 'test/stuff'
+  '/playground': {
+    view: 'playground/stuff'
   },
   '/fb': {
-    view: 'test/fb'
+    view: 'playground/fb'
   },
   '/fb2': {
-    view: 'test/fb2'
+    view: 'playground/fb2'
   },
   '/medium': {
-    view: 'test/medium'
+    view: 'playground/medium'
+  },
+  '/food': {
+    view: 'playground/food'
   },
   '/polymer': {
     view: 'polymer/poly'
@@ -110,9 +113,6 @@ module.exports.routes = {
   },
   '/shape': {
     view: 'shape/index'
-  },
-  '/sayhi': function(req, res, next) {
-    console.log("hi there", req);
   },
   '/auth/twitter': function() {
     console.log(passport);

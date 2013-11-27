@@ -1,0 +1,124 @@
+<link href='http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800' rel='stylesheet' type='text/css'>
+
+<style>
+body {
+
+}
+nav {
+  height: 60px;
+  width: 80%;
+  min-width: 600px;
+  position: fixed;
+  left: 10%;
+  background: rgba(29,41,57, 1.0);
+  margin: 20px auto auto auto;
+  padding: 4px;
+  font-family: 'Dosis', sans-serif;
+  box-shadow: 3px 3px 3px grey;
+}
+nav ul {
+  width: 100%;
+  height: 40px;
+  margin: 0px auto 0px auto;
+}
+nav ul li {
+  font-size: 32px;
+  list-style: none;
+  position: relative;
+  color: white;
+  display: inline-block;
+  margin: 0px 32px auto 32px;
+}
+section {
+  float: left;
+  display: inline-block;
+  height: 100%;
+}
+#sect-1 {
+  background: white;
+}
+#sect-2 {
+  background: pink;
+}
+#sect-3 {
+  background: yellow;
+}
+#sect-4 {
+  background: magenta;
+}
+</style>
+
+<nav>
+  <ul>
+    <li><a id="for-1" href="#">SECTION 1</a></li>
+    <li><a id="for-2" href="#">SECTION 2</a></li>
+    <li><a id="for-3" href="#">SECTION 3</a></li>
+    <li><a id="for-4" href="#">SECTION 4</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <section id="sect-1">
+  </section>
+
+  <section id="sect-2">
+  </section>
+
+  <section id="sect-3">
+  </section>
+
+  <section id="sect-4">
+  </section>
+
+</div>
+
+<script type='text/javascript'>
+
+$(document).ready(function() {
+
+  var windowWidth = $(window).width();
+  var windowHeight = $(window).height();
+  var containerWidth = windowWidth * 4;
+  var currentSection = 1;
+
+  $('.container').css('width', containerWidth);
+  $('section').css('width', windowWidth).css('height', windowHeight);
+
+  function moveSection(windowWidth, target, section) {
+    var currentPosition = section.position().left;
+    var timer = setInterval(function() {
+      if (target > currentSection) {
+        var distance = (target - currentSection) * windowWidth;
+        $(window).scrollLeft(currentPosition += distance/60);
+      } else if (target < currentSection) {
+        var distance = (currentSection - target) * windowWidth;
+        $(window).scrollLeft(currentPosition -= distance/60);
+      } else {
+        return false;
+      }
+    }, 16.66);
+    setTimeout(function() {
+      clearInterval(timer);
+      currentSection = target;
+    }, 1016.66);
+  }
+
+  $("#for-1").on('click', function() {
+    var target = 1;
+    moveSection(windowWidth, target, $("#sect-" + currentSection));
+  });
+  $("#for-2").on('click', function() {
+    var target = 2;
+    moveSection(windowWidth, target, $("#sect-" + currentSection));
+  });
+  $("#for-3").on('click', function() {
+    var target = 3;
+    moveSection(windowWidth, target, $("#sect-" + currentSection));
+  });
+  $("#for-4").on('click', function() {
+    var target = 4;
+    moveSection(windowWidth, target, $("#sect-" + currentSection));
+  });
+
+});
+</script>

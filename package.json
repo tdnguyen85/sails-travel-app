@@ -13,7 +13,8 @@
     "passport-twitter": "*",
     "twit": "*",
     "sails-mongo": "~0.9.5",
-    "oauth": "~0.9.10"
+    "oauth": "~0.9.10",
+    "gm": "~1.13.3"
   },
   "scripts": {
     "start": "node app.js",

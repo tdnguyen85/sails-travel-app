@@ -1,0 +1,281 @@
+<style>
+body {
+  font-family: Lato, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+h6 {
+  display: inline-block;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+.left {
+  width: 20%;
+  min-width: 100px;
+  height: 100%;
+  background-color: rgba(29,41,57, 1.0);
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  float: left;
+}
+.middle {
+  width: 30%;
+  min-width: 150px;
+  height: 100%;
+  background-color: rgba(28,175,154, 1.0);
+  padding: 0;
+  margin: 0;
+  overflow: scroll;
+  position: relative;
+  float: left;
+}
+.right {
+  width: 50%;
+  min-width: 250px;
+  height: 100%;
+  background-color: rgba(255,255,255, 1.0);
+  padding: 0;
+  margin: 0;
+  overflow: scroll;
+  position: relative;
+  float: left;
+}
+.tweet-item {
+  width: 96%;
+  margin: 10px auto 10px auto;
+  padding: 5px;
+  background: rgba(238,79,75, 1.0);
+}
+.tweet-header {
+  display: inline-block;
+  /*padding: 5px;*/
+  /*background-color: rgba(255,255,255, 0.8);*/
+}
+.tweet-body {
+  margin-top: 5px;
+  padding: 5px;
+  /*background: rgba(209,220,72, 1.0);*/
+}
+.tweet-text {
+  font-size: 12px;
+  color: white;
+}
+.tweet-avatar {
+  display: inline-block;
+}
+.screen-name {
+  margin: 5px;
+}
+.user-tweet-item {
+  width: 96%;
+  margin: 10px auto 10px auto;
+  padding: 10px;
+}
+a {
+  color: rgba(209,220,72, 1.0) !important;
+}
+/* animation for React.js components */
+.animateList-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.animateList-enter.animateList-enter-active {
+  opacity: 0.99;
+}
+.animateList-leave {
+  opacity: 0.99;
+  transition: opacity .5s ease-in;
+}
+.animateList-leave.animateList-leave-active {
+  opacity: 0.01;
+}
+</style>
+
+
+<div class="container">
+
+  <div class="left">
+  </div>
+
+  <div class="middle">
+    <div id="alltweets"></div>
+  </div>
+
+  <div class="right">
+    <div id="user-tweets"></div>
+  </div>
+
+</div>
+
+<script type="text/jsx">
+
+/**
+ * @jsx React.DOM
+ */
+
+var ReactTransitionGroup = React.addons.TransitionGroup;
+
+var TweetItem = React.createClass({
+  remove: function(e) {
+    e.preventDefault();
+    console.log(this.refs.tweetItem.getDOMNode());
+    this.refs.tweetItem.getDOMNode().remove();
+  },
+  expand: function(e) {
+    e.preventDefault();
+    $(this.refs.tweetItem.getDOMNode()).addClass("expand-tweet");
+  },
+  handleClick: function(e) {
+    e.preventDefault();
+
+    $("#target-img").attr("src", this.props.banner);
+  },
+  render: function() {
+
+    return(
+      <ReactTransitionGroup transitionName="animateList">
+      <div className="user-tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.banner + ') no-repeat center'}}>
+        <div className="block2x0 block">
+          <img src={this.props.avatar}></img>
+          <h6 className="screen-name">
+            <a href="#" onClick={this.handleClick}>{this.props.screenName}</a>
+          </h6>
+        </div>
+        <div className="block10x0 block">
+
+        </div>
+        <div>
+          {this.props.children}
+        </div>
+        <a onClick={this.remove} href="#">X</a>
+        <a onClick={this.expand} href="#">O</a>
+      </div>
+      <hr></hr>
+      </ReactTransitionGroup>
+    );
+  }
+});
+
+var TweetList = React.createClass({
+  render: function() {
+    var tweetNodes = this.props.data.map(function(item) {
+      return <TweetItem screenName={item.user.screen_name} avatar={item.user.profile_image_url} banner={item.user.profile_banner_url} >{item.text}</TweetItem>;
+    });
+    return (
+      <div className="tweet-list">
+          {tweetNodes}
+      </div>
+    );
+  }
+});
+var TweetManager = React.createClass({
+  loadTweetsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      data: {q: this.props.query},
+      dataType: 'json',
+      mimeType: 'textPlain',
+      success: function(data) {
+        console.log(data);
+        this.setState({data: data.statuses || data});
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentWillMount: function() {
+    this.loadTweetsFromServer();
+    // setInterval(
+    //   this.loadTweetsFromServer.bind(this),
+    //   this.props.pollInterval
+    // );
+  },
+  render: function() {
+    return(
+      <div className="tweet-manager">
+
+        <TweetList data={this.state.data} />
+
+      </div>
+    );
+  }
+});
+
+var StreamTweet = React.createClass({
+  handleClick: function(e) {
+    e.preventDefault();
+    React.unmountComponentAtNode(document.getElementById('user-tweets'));
+    React.renderComponent(
+      <TweetManager url="/tweet/viewFollowedTweets" query={this.props.data.user.screen_name} />,
+      document.getElementById('user-tweets')
+    );
+    this.getWindowPosition();
+  },
+  getWindowPosition: function() {
+    console.log($(this.refs.tweetItem.getDOMNode()).position());
+  },
+  formatTime: function() {
+    setInterval(function() {
+    createdAt = new Date(this.props.data.created_at);
+    currentTime = new Date();
+    timeMarker = currentTime - createdAt;
+    return timeMarker;
+  },
+  render: function() {
+    return(
+      <ReactTransitionGroup transitionName="animateList">
+      <div className="tweet-item" ref="tweetItem" style={{background: 'inherit url(' + this.props.data.user.profile_banner_url + ') no-repeat center'}}>
+        <div className="tweet-avatar">
+          <img src={this.props.data.user.profile_image_url}></img>
+        </div>
+        <div className="tweet-header block2x0 block">
+          <h6 className="screen-name">
+            <a href="#" onClick={this.handleClick}>{'@'}{this.props.data.user.screen_name}</a>
+          </h6>
+          <span>{this.formatTime()}</span>
+        </div>
+        <div className="tweet-body">
+          <span className="tweet-text">{this.props.data.text}</span>
+        </div>
+      </div>
+      </ReactTransitionGroup>
+    );
+  }
+});
+
+
+
+$(document).ready(function() {
+
+
+  socket.get('/tweet/stream', function(response) {
+    console.log(response);
+    tweetCount = 1;
+
+    socket.on('tweet', function(tweet){
+      var newDiv = document.createElement('div');
+      var wrapperDiv = document.getElementById('alltweets');
+      newDiv.id = "tweet" + tweetCount;
+      wrapperDiv.insertBefore(newDiv, wrapperDiv.firstChild);
+      console.log(tweet);
+      React.renderComponent(
+        <StreamTweet data={tweet} />,
+        document.getElementById(newDiv.id)
+      );
+      tweetCount+=1;
+    });
+  });
+
+
+});
+
+</script>
