@@ -58,16 +58,16 @@ section {
 </nav>
 
 <div class="container">
-  <section id="sect-1">
+  <section id="sect-1" class="sect">
   </section>
 
-  <section id="sect-2">
+  <section id="sect-2" class="sect">
   </section>
 
-  <section id="sect-3">
+  <section id="sect-3" class="sect">
   </section>
 
-  <section id="sect-4">
+  <section id="sect-4" class="sect">
   </section>
 
 </div>
@@ -120,5 +120,8 @@ $(document).ready(function() {
     moveSection(windowWidth, target, $("#sect-" + currentSection));
   });
 
+  // Bacon JS stuff
+
+  var navClick = $(".sect").asEventStream("click");
 });
 </script>
