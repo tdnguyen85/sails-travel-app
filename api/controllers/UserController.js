@@ -34,9 +34,12 @@ module.exports = {
   },
   seedUsers: function(req, res) {
     var seeds = [
-      {name: "Johnny Knoxville"},
-      {name: "Steve Harvey"},
-      {name: "Jerome McKeil"}
+      {firstName: "Johnny", lastName: "Knoxville", username: "JKnox", password: "seed", age: 40, gender: "male", location: "Los Angeles"},
+      {firstName: "Steve", lastName: "Harvey", username: "Steve", password: "seed", age: 44, gender: "male", location: "Los Angeles"},
+      {firstName: "Blue", lastName: "Ivey", username: "BI", password: "seed", age: 3, gender: "female", location: "New York"},
+      {firstName: "Dave", lastName: "Chappelle", username: "Chap", password: "seed", age: 35, gender: "male", location: "Oakland"},
+      {firstName: "Lionel", lastName: "Messi", username: "Lion", password: "seed", age: 26, gender: "male", location: "Barcelona"},
+      {firstName: "Claire", lastName: "Dane", username: "Claire", password: "seed", age: 40, gender: "female", location: "Los Angeles"}
     ];
     seeds.forEach(function(user) {
       User.create(user).done(function(err, user) {

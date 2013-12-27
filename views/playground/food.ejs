@@ -1,8 +1,18 @@
 <link href='http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800' rel='stylesheet' type='text/css'>
 
 <style>
+html {
+  background: url(images/bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 body {
 
+}
+img {
+  display: none;
 }
 nav {
   height: 60px;
@@ -33,9 +43,11 @@ section {
   float: left;
   display: inline-block;
   height: 100%;
+  overflow: hidden;
 }
 #sect-1 {
   background: white;
+
 }
 #sect-2 {
   background: pink;
@@ -46,28 +58,43 @@ section {
 #sect-4 {
   background: magenta;
 }
+.bg-img-div {
+  height: ;
+}
 </style>
 
 <nav>
   <ul>
-    <li><a id="for-1" href="#">SECTION 1</a></li>
-    <li><a id="for-2" href="#">SECTION 2</a></li>
-    <li><a id="for-3" href="#">SECTION 3</a></li>
-    <li><a id="for-4" href="#">SECTION 4</a></li>
+    <li><a id="for-1" class="nav" href="#">SECTION 1</a></li>
+    <li><a id="for-2" class="nav" href="#">SECTION 2</a></li>
+    <li><a id="for-3" class="nav" href="#">SECTION 3</a></li>
+    <li><a id="for-4" class="nav" href="#">SECTION 4</a></li>
   </ul>
 </nav>
 
 <div class="container">
   <section id="sect-1" class="sect">
+    <div class="bg-img-div">
+      <img src="/images/berries-221193_1280.jpg" class="bg-img" id="bg-img1" />
+    </div>
   </section>
 
   <section id="sect-2" class="sect">
+    <div class="bg-img-div">
+      <img src="/images/cherry-blossoms-222370_1280.jpg" class="bg-img" id="bg-img2" />
+    </div>
   </section>
 
   <section id="sect-3" class="sect">
+    <div class="bg-img-div">
+      <img src="/images/scouring-rush-horsetail-216066_1280.jpg" class="bg-img" id="bg-img3" />
+    </div>
   </section>
 
   <section id="sect-4" class="sect">
+    <div class="bg-img-div">
+      <img src="images/sun-flower-209613_1280.jpg" class="bg-img" id="bg-img4" />
+    </div>
   </section>
 
 </div>
@@ -76,13 +103,7 @@ section {
 
 $(document).ready(function() {
 
-  var windowWidth = $(window).width();
-  var windowHeight = $(window).height();
-  var containerWidth = windowWidth * 4;
   var currentSection = 1;
-
-  $('.container').css('width', containerWidth);
-  $('section').css('width', windowWidth).css('height', windowHeight);
 
   function moveSection(windowWidth, target, section) {
     var currentPosition = section.position().left;
@@ -103,25 +124,58 @@ $(document).ready(function() {
     }, 1016.66);
   }
 
-  $("#for-1").on('click', function() {
-    var target = 1;
-    moveSection(windowWidth, target, $("#sect-" + currentSection));
-  });
-  $("#for-2").on('click', function() {
-    var target = 2;
-    moveSection(windowWidth, target, $("#sect-" + currentSection));
-  });
-  $("#for-3").on('click', function() {
-    var target = 3;
-    moveSection(windowWidth, target, $("#sect-" + currentSection));
-  });
-  $("#for-4").on('click', function() {
-    var target = 4;
-    moveSection(windowWidth, target, $("#sect-" + currentSection));
-  });
+  function attacheClickHandlers(panels) {
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    var containerWidth = windowWidth * 4;
 
+
+    $('.container').css('width', containerWidth);
+    $('section').css('width', windowWidth).css('height', windowHeight);
+
+    for (var i= 1; i<=panels; i++) {
+      (function(num) {
+        $("#for-" + num).on('click', function() {
+          var target = num;
+          moveSection(windowWidth, target, $("#sect-" + currentSection));
+        });
+      })(i);
+    }
+
+    // $("#for-1").on('click', function() {
+    //   var target = 1;
+    //   moveSection(windowWidth, target, $("#sect-" + currentSection));
+    // });
+    // $("#for-2").on('click', function() {
+    //   var target = 2;
+    //   moveSection(windowWidth, target, $("#sect-" + currentSection));
+    // });
+    // $("#for-3").on('click', function() {
+    //   var target = 3;
+    //   moveSection(windowWidth, target, $("#sect-" + currentSection));
+    // });
+    // $("#for-4").on('click', function() {
+    //   var target = 4;
+    //   moveSection(windowWidth, target, $("#sect-" + currentSection));
+    // });
+  }
+
+  attacheClickHandlers(4);
   // Bacon JS stuff
 
-  var navClick = $(".sect").asEventStream("click");
+  var navClick = $(".nav").asEventStream("click");
+
+  var blur = $(window).asEventStream('blur').map(function() {
+    return false;
+  });
+  var focus =  $(window).asEventStream('focus').map(function() {
+    return true;
+  });
+  var focused = focus.merge(blur).toProperty(true);
+
+  focused.onValue(function(focus) { console.log('focus', focus); });
+  navClick.onValue(function(click) {
+    console.log(click);
+  });
 });
 </script>

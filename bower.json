@@ -12,7 +12,8 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "*"
+    "polymer": "*",
+    "bacon" : "*"
   },
   "devDependencies": {
     "<test-framework-name>": "<version>"
